@@ -29,6 +29,9 @@ Once we have `homebrew`, `cask` (and `mas` if needed) we're ready to go (yes, th
 # Efficiency booster
 brew cask install alfred
 
+# Time warrior
+brew install timewarrior
+
 # Slack
 brew cask install slack
 
