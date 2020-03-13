@@ -35,9 +35,6 @@ brew install timewarrior
 # Slack
 brew cask install slack
 
-# Wunderlist
-mas install 410628904
-
 # Amphetamine
 mas install 937984704
 
