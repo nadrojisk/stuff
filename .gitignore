@@ -1,5 +1,13 @@
+## IDE Files
 # vscode files
 .vscode/
+# visual studio files
+Release/
+Debug/
+.vs/
+*.aps
+*.vcsproj*
+*.vcxproj*
 
 # sandbox
 sandbox/
