@@ -45,31 +45,36 @@
         "decompiler",
         "hardcoded",
         "heartbleed",
+        "pytest",
+        "ARPs",
+        "LANs",
+        "LLMNR",
+        "Metasploit",
+        "Metasploit's",
+        "Multicast",
+        "NMAP's",
+        "Sosnowski",
+        "Walkthrough",
+        "choco",
+        "ettercap",
+        "executables",
+        "exfiltration",
+        "hashcat",
+        "kwargs",
+        "meterpreter",
+        "msfconsole",
+        "nmap",
+        "outfile",
+        "pcap",
+        "pyshark's",
+        "r'SYSTEM",
+        "subkey",
+        "subnet",
+        "tshark",
+        "wireshark",
         "numpy",
-        "pytest"
     ],
     "gitlens.codeLens.enabled": false,
-    // "launch": {
-    //     "version": "0.2.0",
-    //     "configurations": [
-    //         {
-    //             "name": "C/C++ Debug",
-    //             "type": "lldb",
-    //             "request": "launch",
-    //             "program": "${fileDirname}/${fileBasenameNoExtension}",
-    //             "args": [
-    //                 "hello_word.txt"
-    //             ]
-    //         },
-    //         {
-    //             "name": "Python Debug",
-    //             "type": "python",
-    //             "request": "launch",
-    //             "program": "${file}",
-    //             "console": "integratedTerminal"
-    //         }
-    //     ]
-    // },
     "java.errors.incompleteClasspath.severity": "ignore",
     "workbench.colorTheme": "One Dark Pro",
     "editor.fontFamily": "Fira Code",
@@ -78,4 +83,10 @@
     "git.suggestSmartCommit": false,
     "workbench.startupEditor": "newUntitledFile",
     "todohighlight.isCaseSensitive": false,
+    "debug.showBreakpointsInOverviewRuler": true,
+    "python.formatting.provider": "autopep8",
+    "git.enableSmartCommit": true,
+    "gitlens.hovers.currentLine.over": "line",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "liveshare.presence": true,
 }
