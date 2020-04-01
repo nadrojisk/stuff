@@ -8,6 +8,7 @@ Debug/
 *.aps
 *.vcsproj*
 *.vcxproj*
+*.tlog
 
 # sandbox
 sandbox/
