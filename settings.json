@@ -1,5 +1,8 @@
 {
-    "python.pythonPath": "C:\\Python38\\python.exe",
+    "code-runner.executorMap": {
+        "python": "python3",
+    },
+    "python.pythonPath": "/usr/bin/python3",
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     "editor.tabSize": 4,
@@ -14,7 +17,7 @@
     "editor.formatOnPaste": true,
     "editor.suggestSelection": "first",
     "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
-    "terminal.integrated.fontFamily": "Meslo LG M DZ for Powerline",
+    "terminal.integrated.fontFamily": "MesloLGS NF",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.colorTheme": "One Dark Pro",
     "workbench.iconTheme": "material-icon-theme",
@@ -37,6 +40,9 @@
     "carbon.theme": "one-dark",
     "code-runner.runInTerminal": true,
     "window.zoomLevel": -0.5,
+    "markdownlint.config": {
+        "MD025": false
+    },
     "breadcrumbs.enabled": true,
     "git.autofetch": true,
     "git.confirmSync": false,
@@ -52,7 +58,7 @@
     "python.jediEnabled": false,
     "python.formatting.provider": "autopep8",
     "python.linting.enabled": true,
-    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.pylintUseMinimalCheckers": true,
     "python.linting.flake8CategorySeverity.F": "Warning",
     "python.linting.pylintArgs": [
         "--extension-pkg-whitelist=netifaces, numpy, np"
@@ -100,6 +106,7 @@
         "subkey",
         "subnet",
         "tshark",
+        "wirelessly",
         "wireshark"
     ],
     "todohighlight.isCaseSensitive": false,
@@ -111,4 +118,7 @@
     "remote.SSH.remotePlatform": {
         "192.168.209.129": "linux"
     },
+    // "go.inferGopath": true
+    "go.gopath": "~/go",
+    "python.languageServer": "Microsoft"
 }
