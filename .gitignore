@@ -1,6 +1,10 @@
 ## IDE Files
 # vscode files
 .vscode/
+
+# JS
+node_modules
+
 # visual studio files
 Release/
 Debug/
@@ -45,6 +49,8 @@ exploraratory/
 ehthumbs.db
 Thumbs.db
 
+###### Temp
+tempCoderunnerFile.py
 
 ###### Python
 
