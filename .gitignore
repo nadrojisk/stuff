@@ -5,6 +5,12 @@
 # JS
 node_modules
 
+#WSL Stuffs
+*Zone.Identifier
+
+# Office 
+~$*
+
 # visual studio files
 Release/
 Debug/
