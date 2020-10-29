@@ -7,7 +7,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=/usr/local/bin:$HOME/bin:$PATH
 
 export PATH='/Users/snow/Library/Python/3.7/bin':$PATH
 export PATH="$PATH:/Applications/010 Editor.app/Contents/CmdLine"
