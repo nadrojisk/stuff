@@ -1,24 +1,9 @@
-## IDE Files
 # vscode files
 .vscode/
 
 # JS
-node_modules
-
-#WSL Stuffs
-*Zone.Identifier
-
-# Office 
-~$*
-
-# visual studio files
-Release/
-Debug/
-.vs/
-*.aps
-*.vcsproj*
-*.vcxproj*
-*.tlog
+node_modules/
+package-lock.json
 
 # sandbox
 sandbox/
@@ -55,8 +40,6 @@ exploraratory/
 ehthumbs.db
 Thumbs.db
 
-###### Temp
-*/tempCodeRunnerFile.py
 
 ###### Python
 
@@ -149,7 +132,7 @@ ipython_config.py
 #   For a library or package, you might want to ignore these files since the code is
 #   intended to run in multiple environments; otherwise, check them in:
 # .python-version
-env/
+
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
