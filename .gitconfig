@@ -1,0 +1,6 @@
+[user]
+	email = jjs0029@auburn.edu
+	name = nadrojisk
+[core]
+	excludesfile = .gitignore
+	ignoreCase = True
