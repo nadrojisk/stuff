@@ -9,11 +9,11 @@ fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=/usr/local/bin:$HOME/bin:$PATH
 
-export PATH='/Users/snow/Library/Python/3.7/bin':$PATH
+export PATH='$HOME/Library/Python/3.7/bin':$PATH
 export PATH="$PATH:/Applications/010 Editor.app/Contents/CmdLine"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/snow/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 #DEFAULT_USER = snow
 
 # Uncomment the following line to use case-sensitive completion.
@@ -74,7 +74,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # aliases
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="/usr/local/sbin:$PATH"
 alias ghidra="cd /Applications/Ghidra;./ghidraRun; cd -"
 alias vim="/usr/local/bin/vim"
@@ -85,7 +85,8 @@ manopt() {
   [[ $opt == -* ]] || { (( ${#opt} == 1 )) && opt="-$opt" || opt="--$opt"; }
   man "$cmd" | col -b | awk -v opt="$opt" -v RS= '$0 ~ "(^|,)[[:blank:]]+" opt "([[:punct:][:space:]]|$)"'
 }
-source ~/.oh-my-zsh/custom/plugins/powerlevel10k/powerlevel10k.zsh-theme
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
