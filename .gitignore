@@ -1,5 +1,9 @@
 # vscode files
 .vscode/
+tempCodeRunnerFile.py
+
+# WSL
+*Zone.Identifier*
 
 # JS
 node_modules/
