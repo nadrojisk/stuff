@@ -9,7 +9,8 @@ fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=/usr/local/bin:$HOME/bin:$PATH
 
-export PATH='$HOME/Library/Python/3.7/bin':$PATH
+export PATH=$HOME'/.local/bin':$PATH
+export PATH=$HOME'/Library/Python/3.7/bin':$PATH
 export PATH="$PATH:/Applications/010 Editor.app/Contents/CmdLine"
 
 # Path to your oh-my-zsh installation.
@@ -27,7 +28,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+#ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -46,6 +47,7 @@ ENABLE_CORRECTION="true"
 plugins=(
   git
   zsh-autosuggestions
+  zsh-syntax-highlighting
   z
   colored-man-pages
   encode64
@@ -86,7 +88,18 @@ manopt() {
   man "$cmd" | col -b | awk -v opt="$opt" -v RS= '$0 ~ "(^|,)[[:blank:]]+" opt "([[:punct:][:space:]]|$)"'
 }
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+alias zsh_source="source ~/.zshrc"
+alias zsh_config="vim ~/.zshrc"
+# disable autocorrect
+unsetopt correct_all
+
+
+
+/usr/bin/keychain --nogui /home/nadrojisk/.ssh/id_ed25519 2>/dev/null
+source /home/nadrojisk/.keychain/enterprise-sh
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme
