@@ -24,6 +24,19 @@
             ],
             "preLaunchTask": "gcc-7 build active file",
             "miDebuggerPath": "/usr/bin/gdb"
-        }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug",
+            "cargo": {
+                "args": [
+                    "run",
+                ],
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "cargo build"
+        },
     ]
 }
