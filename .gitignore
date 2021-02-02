@@ -1,6 +1,7 @@
 # vscode files
 .vscode/
 tempCodeRunnerFile.py
+*-workspace
 
 # WSL
 *Zone.Identifier*
