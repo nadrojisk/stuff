@@ -1,12 +1,10 @@
 [core]
-  # Don't paginate output by default
-  pager = cat
-	excludesfile = C:\\Users\\Jordan\\Documents\\GitHub\\stuff\\.gitignore
+	excludesfile = /home/nadrojisk/.gitignore
 	ignoreCase = true
 	safecrlf = false
 	whitespace = cr-at-eol
 	# Don't consider trailing space change as a cause for merge conflicts
-  whitespace = -trailing-space
+	whitespace = -trailing-space
 
 [user]
 	email = jjs0029@auburn.edu
@@ -42,3 +40,5 @@
   uncommit = reset --soft HEAD~1
   # Remove file(s) from Git but not from disk
   untrack = rm --cache --
+[hub]
+	protocol = ssh
