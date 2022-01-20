@@ -35,7 +35,7 @@ Plug 'jiangmiao/auto-pairs' "Autocomplete brackets.
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tomtom/tcomment_vim'
-Plug 'tpope/vim-fugitive' "Git tools
+"Plug 'tpope/vim-fugitive' "Git tools
 Plug 'metakirby5/codi.vim'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'} "Nerdtree
 
@@ -71,6 +71,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " save with zz
 nnoremap zz :update<cr>
 
+set backspace=indent,eol,start
 " set clipboard to easily copy from vim and paste into OSx
 set clipboard=unnamed
 
@@ -81,12 +82,12 @@ nnoremap <C-p> :Files<Cr>
 " => NERDTree
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Changes NerdTree Toggle to Ctrl + n
-map <C-n> :NERDTreeToggle<CR>
-autocmd VimEnter * NERDTree "Toggles Nerdtree on vim open
+"map <C-n> :NERDTreeToggle<CR>
+"autocmd VimEnter * NERDTree "Toggles Nerdtree on vim open
 "let NERDTreeQuitOnOpen = 1 "closes NerdTree when opening a file
-autocmd VimEnter * wincmd p
+"autocmd VimEnter * wincmd p
 " Close nerd tree if it is the only buffer open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
