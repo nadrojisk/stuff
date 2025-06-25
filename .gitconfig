@@ -1,8 +1,8 @@
+[includeIf "gitdir/i:*"]
+    path = ~/.gitconfig-windows
+
 [includeIf "gitdir/i:/mnt/"]
     path = ~/.gitconfig-wsl
-
-[includeIf "gitdir/i:C:/"]
-    path = ~/.gitconfig-windows
 
 [core]
     excludesfile = ~/.gitignore
