@@ -71,3 +71,7 @@ Set-ItemProperty -Path $clock2 -Name "TzRegKeyName" -Value "Central Standard Tim
 # Install WinGet Packages
 winget install Microsoft.PowerToys `
 	Microsoft.PowerShell.Preview
+
+# Add Gitconfig and Gitignore symlinks
+New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value $PSScriptRoot\.gitconfig
+New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value $PSScriptRoot\.gitignore
