@@ -1,19 +1,28 @@
+[includeIf "gitdir/i:/mnt/"]
+    path = ~/.gitconfig-wsl
+
+[includeIf "gitdir/i:C:/"]
+    path = ~/.gitconfig-windows
+
 [core]
-	excludesfile = /home/nadrojisk/.gitignore
-	ignoreCase = true
-	safecrlf = false
-	whitespace = cr-at-eol
-	# Don't consider trailing space change as a cause for merge conflicts
-	whitespace = -trailing-space
-
+    excludesfile = ~/.gitignore
+    ignoreCase = true
+    safecrlf = false
+    whitespace = -trailing-space
+    filemode = false
+    autocrlf = true
 [user]
-	email = jjs0029@auburn.edu
-	name = nadrojisk
-
+    name = Sosnowski, Jordan
+    email = jordan.sosnowski@pnnl.gov
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7453USdRN6KA1yvlPFXKY0xWSM2D8o/lJsb2uMXB9+
 [color]
-  	# Enable colors in color-supporting terminals
-  	ui = auto
-
+    ui = auto
+[pull]
+    rebase = false
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
 [alias]
   # List available aliases
   aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
@@ -41,4 +50,4 @@
   # Remove file(s) from Git but not from disk
   untrack = rm --cache --
 [hub]
-	protocol = ssh
+    protocol = ssh
