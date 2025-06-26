@@ -74,4 +74,5 @@ winget install Microsoft.PowerToys `
 
 # Add Gitconfig and Gitignore symlinks
 New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value $PSScriptRoot\.gitconfig
+New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value $PSScriptRoot\.gitconfig-windows
 New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value $PSScriptRoot\.gitignore
