@@ -76,3 +76,41 @@ winget install Microsoft.PowerToys `
 New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value $PSScriptRoot\.gitconfig
 New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value $PSScriptRoot\.gitconfig-windows
 New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value $PSScriptRoot\.gitignore
+
+$folderPath = "C:\CSOC_Investigations"
+mkdir "C:\CSOC_Investigations"
+# Get current ACL and disable inheritance
+$acl = Get-Acl $folderPath
+$acl.SetAccessRuleProtection($true, $false)  # Disable inheritance, don't preserve existing
+
+# Clear existing access rules
+$acl.Access | ForEach-Object { $acl.RemoveAccessRule($_) }
+
+# Define the groups
+$groups = @("Administrators", "Authenticated Users", "Users")
+
+foreach ($group in $groups) {
+    # Read/Write for files only (Object Inherit, No Propagate)
+    $fileRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
+        $group,
+        "Read,Write,Delete",
+        "ObjectInherit",
+        "InheritOnly",
+        "Allow"
+    )
+    $acl.AddAccessRule($fileRule)
+
+    # Full control for folders and subfolders (Container Inherit only)
+    $folderRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
+        $group,
+        "FullControl",
+        "ContainerInherit",
+        "None",
+        "Allow"
+    )
+    $acl.AddAccessRule($folderRule)
+}
+
+# Apply the ACL
+Set-Acl -Path $folderPath -AclObject $acl
+Write-Host "ACL configuration applied successfully"
