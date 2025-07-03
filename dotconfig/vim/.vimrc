@@ -2,7 +2,7 @@
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
-set exrc  										" Allows project specific .vimrc
+set exrc										" Allows project specific .vimrc
 set autoread                  " reload files
 
 

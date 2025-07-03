@@ -78,7 +78,7 @@ New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value $PSScriptRoot\
 New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value $PSScriptRoot\.gitignore
 
 $folderPath = "C:\CSOC_Investigations"
-mkdir "C:\CSOC_Investigations"
+mkdir $folderPath
 # Get current ACL and disable inheritance
 $acl = Get-Acl $folderPath
 $acl.SetAccessRuleProtection($true, $false)  # Disable inheritance, don't preserve existing

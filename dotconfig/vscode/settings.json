@@ -1,0 +1,160 @@
+{
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.rulers": [
+        100
+    ],
+    "editor.detectIndentation": true,
+    "editor.renderIndentGuides": false,
+    "editor.renderWhitespace": "none",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.suggestSelection": "first",
+    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+    "terminal.integrated.fontFamily": "Meslo LG M DZ for Powerline",
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.startupEditor": "newUntitledFile",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 5000, // 5 seconds
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.eol": "\n",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.factorypath": true,
+        "**/.project": true,
+        "**/.pytest_cache": true,
+        "**/.settings": true
+    },
+    "markdownlint.config": {
+        "no-duplicate-header": false,
+        "single-h1": false
+    },
+    "explorer.sortOrder": "type",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "breadcrumbs.enabled": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.suggestSmartCommit": false,
+    "git.enableSmartCommit": true,
+    "extensions.ignoreRecommendations": false,
+    "telemetry.enableTelemetry": false,
+    "C_Cpp.updateChannel": "Insiders",
+    "python.pythonPath": "C:\\Python38\\python.exe",
+    "python.autoComplete.addBrackets": true,
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--ignore=E731",
+        "--max-line-length",
+        "100",
+    ],
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.analysis.extraPaths": [
+        "source"
+    ],
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=netifaces, numpy, np"
+    ],
+    "python.showStartPage": false,
+    "python.autoComplete.extraPaths": [
+        "./",
+        "./src",
+        "./source"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "vsintellicode.python.completionsEnabled": false,
+    "todohighlight.isCaseSensitive": false,
+    "todohighlight.keywords": [
+        {
+            "text": "NOTE:",
+            "color": "#ffffff",
+            "backgroundColor": "blue",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "REVIEW:",
+            "color": "#ffffff",
+            "backgroundColor": "green",
+            "overviewRulerColor": "grey"
+        },
+    ],
+    "debug.showBreakpointsInOverviewRuler": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "code-runner.runInTerminal": true,
+    "code-runner.saveAllFilesBeforeRun": true,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.executorMap": {
+        "python": "$pythonPath $fullFileName",
+    },
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
+    "C_Cpp.formatting": "vcFormat",
+    "cSpell.languageSettings": [
+        // This one works with python
+        {
+            "languageId": "python",
+            "includeRegExpList": [
+                "/#.*/",
+                "/('''|\"\"\")[^\\1]+?\\1/g"
+            ]
+        },
+        // this one works with javascript, C, typescript, etc,
+        // but you need to copy it and change the language id.
+        {
+            "languageId": "javascript",
+            "includeRegExpList": [
+                "CStyleComment"
+            ]
+        },
+        {
+            "languageId": "c",
+            "includeRegExpList": [
+                "CStyleComment"
+            ]
+        },
+        {
+            "languageId": "cpp",
+            "includeRegExpList": [
+                "CStyleComment"
+            ]
+        },
+    ],
+    "gitlens.hovers.avatars": false,
+    "gitlens.codeLens.enabled": false,
+    "cSpell.userWords": [
+        "Utalizes",
+        "evals",
+        "numpy",
+        "pylint"
+    ],
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.lambda": "sameLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.namespace": "sameLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "sameLine",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 100,
+    "editor.wordBasedSuggestions": false,
+    "[markdown]": {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 100,
+    },
+    "terminal.integrated.shell.linux": "/usr/bin/zsh",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "python.languageServer": "Pylance",
+    "window.zoomLevel": 0,
+    "C_Cpp.default.intelliSenseMode": "clang-x64",
+
+}
