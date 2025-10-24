@@ -60,6 +60,7 @@ function Get-EntraUserHelper {
             #'onPremisesSamAccountName'
             #'onPremisesUserPrincipalName'
             'userPrincipalName'
+            'onPremisesSecurityIdentifier'
         )
         
         # Ensure Entra connection
@@ -101,13 +102,13 @@ function Test-EntraConnection {
     [CmdletBinding()]
     param()
     
-    try {
-        $null = Get-EntraContext -ErrorAction Stop
-        Write-Verbose "Already connected to Entra"
-    }
-    catch {
-        Write-Host "Connecting to Entra..." -ForegroundColor Yellow
+    $context = Get-EntraContext -ErrorAction SilentlyContinue
+    if ($null -eq $context) {
+        Write-Verbose "Connecting to Entra..." -ForegroundColor Yellow
         Connect-Entra -Scopes 'User.ReadWrite.All' -NoWelcome
+    }
+    else {
+        Write-Verbose "Already connected to Entra"
     }
 }
 
@@ -150,7 +151,13 @@ function Get-EntraUsers {
     foreach ($user in $UserList) {
         try {
             Write-Verbose "Querying user: $user"
-            $result = Get-EntraUser -Search $user -ErrorAction Stop
+            # Detect if input is a SID (S-1-5-...)
+            if ($user -match '^S-1-\d+-\d+(?:-\d+)+$') {
+                $result = Get-EntraUser -Filter "onPremisesSecurityIdentifier eq '$user'" -ErrorAction Stop
+            }
+            else {
+                $result = Get-EntraUser -Search $user -ErrorAction Stop
+            }
             $results += $result
         }
         catch {
