@@ -33,7 +33,7 @@
     Author: Generated for PNNL
     Requires: Microsoft.Graph.Entra module
 #>
-function Get-EntraUserInfo {
+function Get-EntraUserHelper {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true, ValueFromRemainingArguments = $true, Position = 0)]
@@ -296,5 +296,5 @@ function Show-EntraUserDetailGUI {
 }
 
 # Create alias for easier use
-Set-Alias -Name GEU -Value Get-EntraUserInfo
+Set-Alias -Name GEU -Value Get-EntraUserHelper
 
