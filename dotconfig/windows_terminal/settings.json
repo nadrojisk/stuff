@@ -1,0 +1,150 @@
+{
+  "$help": "https://aka.ms/terminal-documentation",
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "actions": [
+    {
+      "command": {
+        "action": "splitPane",
+        "profile": "Ubuntu",
+        "split": "right"
+      },
+      "id": "User.splitUbuntu"
+    }
+  ],
+  "centerOnLaunch": false,
+  "confirmCloseAllTabs": false,
+  "copyFormatting": "none",
+  "copyOnSelect": true,
+  "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+  "experimental.detectURLs": false,
+  "focusFollowMouse": true,
+  "keybindings": [
+    {
+      "id": "Terminal.TogglePaneZoom",
+      "keys": "alt+1"
+    },
+    {
+      "id": "User.splitUbuntu",
+      "keys": "ctrl+alt+shift+2"
+    },
+    {
+      "id": "Terminal.DuplicatePaneAuto",
+      "keys": "alt+shift+d"
+    },
+    {
+      "id": "Terminal.CopyToClipboard",
+      "keys": "ctrl+c"
+    },
+    {
+      "id": "Terminal.PasteFromClipboard",
+      "keys": "ctrl+v"
+    }
+  ],
+  "newTabMenu": [
+    {
+      "type": "remainingProfiles"
+    }
+  ],
+
+  "profiles": {
+    "defaults": {
+      "bellStyle": "none",
+      "font": {
+        "face": "MesloLGL Nerd Font"
+      },
+      "opacity": 80,
+      "unfocusedAppearance": {
+        "opacity": 100
+      },
+
+      "useAcrylic": true
+    },
+    "list": [
+      {
+        "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+        "hidden": false,
+        "name": "PowerShell",
+        "source": "Windows.Terminal.PowershellCore",
+        "tabColor": "#1e86ec",
+        "background": "#031a2d",
+        "elevate": false,
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      },
+      {
+        "background": "#300A25",
+        "tabColor": "#300A25",
+        "guid": "{63785f92-bd33-5b2b-a72c-46f68a2b2e99}",
+        "hidden": false,
+        "name": "Ubuntu",
+        "source": "Windows.Terminal.Wsl",
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      },
+      {
+        "commandline": "%SystemRoot%\\System32\\cmd.exe",
+        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+        "hidden": false,
+        "name": "Command Prompt",
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      },
+      {
+        "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+        "hidden": true,
+        "name": "Azure Cloud Shell",
+        "source": "Windows.Terminal.Azure",
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      },
+      {
+        "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+        "hidden": false,
+        "name": "Windows PowerShell",
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      },
+      {
+        "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\"",
+        "elevate": true,
+        "guid": "{f4f642ef-a495-4535-b7ae-edbbba06feaf}",
+        "icon": "ms-appx:///ProfileIcons/pwsh-preview.png",
+        "name": "Windows PowerShell Core (Admin)",
+        "startingDirectory": "%USERPROFILE%",
+        "background": "#6b0101",
+        "tabColor": "#c9173d",
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      },
+      {
+        "guid": "{43a8a29b-777e-55d3-8947-6b009947baa6}",
+        "hidden": false,
+        "name": "Developer Command Prompt for VS 2022",
+        "source": "Windows.Terminal.VisualStudio",
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      },
+      {
+        "guid": "{cd9f763c-2421-5cac-975e-153fbb3f9ab5}",
+        "hidden": false,
+        "name": "Developer PowerShell for VS 2022",
+        "source": "Windows.Terminal.VisualStudio",
+        "unfocusedAppearance": {
+          "opacity": 100
+        }
+      }
+    ]
+  },
+  "schemes": [],
+  "startupActions": "new-tab -p \"PowerShell\"; new-tab -p \"Ubuntu\"; focus-tab -t 0",
+  "themes": []
+  // "useAcrylicInTabRow": false
+}
