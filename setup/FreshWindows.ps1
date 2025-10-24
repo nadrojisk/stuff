@@ -32,7 +32,8 @@ wsl --install
 Get-WindowsCapability -Name Rsat.ActiveDirectory.DS-LDS.Tools -Online | Add-WindowsCapability -Online
 
 # Enabled Legacy Right Click Context Menu
-New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -force
+New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -Force
+Set-ItemProperty -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Name "(Default)" -Value "" -Force
 
 # Modify Registry to have numkey enabled on boot
 New-PSDrive HKU Registry HKEY_USERS
@@ -73,9 +74,10 @@ winget install Microsoft.PowerToys `
 	Microsoft.PowerShell.Preview
 
 # Add Gitconfig and Gitignore symlinks
-New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value $PSScriptRoot\.gitconfig
-New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value $PSScriptRoot\.gitconfig-windows
-New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value $PSScriptRoot\.gitignore
+New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\git\.gitconfig
+New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\git\.gitconfig-windows
+New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\git\.gitignore
+New-Item -Path ~\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json  -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\Win_Terminal\settings.json
 
 $folderPath = "C:\CSOC_Investigations"
 mkdir $folderPath
@@ -114,3 +116,8 @@ foreach ($group in $groups) {
 # Apply the ACL
 Set-Acl -Path $folderPath -AclObject $acl
 Write-Host "ACL configuration applied successfully"
+
+
+# Restart Windows Explorer
+Stop-Process -Name explorer -Force
+Start-Process explorer

@@ -1,7 +1,7 @@
 [includeIf "gitdir/i:*"]
     path = ~/.gitconfig-windows
 
-[includeIf "gitdir/i:/mnt/"]
+[includeIf "gitdir/i:/"]
     path = ~/.gitconfig-wsl
 
 [core]
@@ -10,7 +10,10 @@
     safecrlf = false
     whitespace = -trailing-space
     filemode = false
-    autocrlf = true
+    autocrlf = input
+    #eol = lf
+    editor = code --wait
+	longpaths = true
 [user]
     name = Sosnowski, Jordan
     email = jordan.sosnowski@pnnl.gov
@@ -51,3 +54,12 @@
   untrack = rm --cache --
 [hub]
     protocol = ssh
+[safe]
+	directory = %(prefix)///wsl.localhost/Ubuntu_22.04/home/sosn071/Documents/Repos/Stash/kusto-query-language
+	directory = %(prefix)///wsl.localhost/Ubuntu_22.04/home/sosn071/Documents/Repos/Stash/splunk
+	directory = %(prefix)///wsl.localhost/Ubuntu_22.04/home/sosn071/Documents/Repos/Stash/steamprofilefinder
+	directory = %(prefix)///wsl.localhost/Ubuntu_22.04/home/sosn071/Documents/Repos/Stash/stuff
+	directory = %(prefix)///wsl.localhost/Ubuntu_22.04/home/sosn071/Documents/Repos/Stash/cyberchef
+	directory = %(prefix)///wsl.localhost/Ubuntu_22.04/home/sosn071/Documents/Repos/Stash/csoc_splunk_app
+[init]
+	defaultBranch = main
