@@ -26,7 +26,42 @@ Write-Host "`nInstalling PowerToys and PowerShell Preview..." -ForegroundColor Y
 
 wsl --install
 
-# Installs Get-ADUser and other AD Tools
+# ============================================================================
+# Import WSL Distributions from External Drives
+# ============================================================================
+Write-Host "`n=== Importing WSL Distributions ===" -ForegroundColor Cyan
+
+# Prompt for Ubuntu import
+$importUbuntu = Read-Host "Do you want to import Ubuntu from an external drive? (Y/N)"
+if ($importUbuntu -eq "Y" -or $importUbuntu -eq "y") {
+    $ubuntuTarPath = Read-Host "Enter the full path to the Ubuntu .tar file (e.g., D:\ubuntu.tar)"
+    if (Test-Path $ubuntuTarPath) {
+        $ubuntuInstallPath = Read-Host "Enter installation path for Ubuntu (e.g., C:\WSL\Ubuntu)"
+        Write-Host "Importing Ubuntu..." -ForegroundColor Yellow
+        wsl --import Ubuntu $ubuntuInstallPath $ubuntuTarPath
+        Write-Host "Ubuntu imported successfully" -ForegroundColor Green
+    } else {
+        Write-Host "Ubuntu tar file not found at: $ubuntuTarPath" -ForegroundColor Red
+    }
+}
+
+# Prompt for Kali import
+$importKali = Read-Host "Do you want to import Kali from an external drive? (Y/N)"
+if ($importKali -eq "Y" -or $importKali -eq "y") {
+    $kaliTarPath = Read-Host "Enter the full path to the Kali .tar file (e.g., D:\kali.tar)"
+    if (Test-Path $kaliTarPath) {
+        $kaliInstallPath = Read-Host "Enter installation path for Kali (e.g., C:\WSL\Kali)"
+        Write-Host "Importing Kali..." -ForegroundColor Yellow
+        wsl --import Kali $kaliInstallPath $kaliTarPath
+        Write-Host "Kali imported successfully" -ForegroundColor Green
+    } else {
+        Write-Host "Kali tar file not found at: $kaliTarPath" -ForegroundColor Red
+    }
+}
+
+Write-Host "`nWSL distributions setup complete" -ForegroundColor Cyan
+Write-Host "You can verify with: wsl --list --verbose`n" -ForegroundColor Gray
+
 Get-WindowsCapability -Name Rsat.ActiveDirectory.DS-LDS.Tools -Online | Add-WindowsCapability -Online
 
 # Enabled Legacy Right Click Context Menu
@@ -113,9 +148,55 @@ foreach ($group in $groups) {
 
 # Apply the ACL
 Set-Acl -Path $folderPath -AclObject $acl
-Write-Host "ACL configuration applied successfully"
+# ============================================================================
+# Windows Terminal Multi-Profile Startup Task
+# Creates a scheduled task that launches Windows Terminal with PowerShell,
+# Ubuntu, and Kali tabs on login, with PowerShell focused.
+# ============================================================================
 
+Write-Host "`n=== Windows Terminal Startup Task Setup ===" -ForegroundColor Cyan
+Write-Host "This will create a task to launch Terminal with 3 tabs on login`n" -ForegroundColor White
 
+# Configuration
+$taskName = "Windows Terminal Multi-Profile Startup"
+$wtExePath = "$env:LOCALAPPDATA\Microsoft\WindowsApps\wt.exe"
+
+# Verify Windows Terminal is installed
+Write-Host "Checking for Windows Terminal..." -ForegroundColor Yellow
+if (Test-Path $wtExePath) {
+    Write-Host "Windows Terminal found at: $wtExePath" -ForegroundColor Green
+
+    # Remove existing task if it exists
+    Write-Host "`nChecking for existing task..." -ForegroundColor Yellow
+    $existingTask = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
+    if ($existingTask) {
+        Write-Host "Found existing task. Removing..." -ForegroundColor Yellow
+        Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+    }
+
+    # Create the scheduled task
+    Write-Host "Creating scheduled task..." -ForegroundColor Yellow
+
+    # Task action with multi-profile arguments
+    $arguments = '-p "PowerShell" ; new-tab -p "Ubuntu" ; new-tab -p "Kali"; focus-tab -t 0'
+    $action = New-ScheduledTaskAction -Execute $wtExePath -Argument $arguments
+
+    # Task trigger (at logon)
+    $trigger = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
+
+    # Task settings
+    $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0
+
+    # Create the task
+    $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -RunLevel Limited
+    Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal -Description "Launches Windows Terminal with PowerShell, Ubuntu, and Kali tabs on login"
+
+    Write-Host "Scheduled task created successfully" -ForegroundColor Green
+    Write-Host "Windows Terminal will launch with 3 tabs on next login" -ForegroundColor Cyan
+} else {
+    Write-Host "Windows Terminal not found!" -ForegroundColor Red
+    Write-Host "Please install Windows Terminal from the Microsoft Store and try again." -ForegroundColor Yellow
+}
 # Restart Windows Explorer
 Stop-Process -Name explorer -Force
 Start-Process explorer
