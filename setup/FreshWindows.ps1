@@ -24,6 +24,10 @@ if (Test-Path $baselineJson) {
 # Install additional packages not in baseline (if needed)
 Write-Host "`nInstalling PowerToys and PowerShell Preview..." -ForegroundColor Yellow
 
+# ============================================================================
+# Install WSL
+# ============================================================================
+Write-Host "`n=== Installing WSL ===" -ForegroundColor Cyan
 wsl --install
 
 # ============================================================================
@@ -62,64 +66,114 @@ if ($importKali -eq "Y" -or $importKali -eq "y") {
 Write-Host "`nWSL distributions setup complete" -ForegroundColor Cyan
 Write-Host "You can verify with: wsl --list --verbose`n" -ForegroundColor Gray
 
+# ============================================================================
+# Install Windows RSAT Tools
+# ============================================================================
+Write-Host "`n=== Installing AD Tools ===" -ForegroundColor Cyan
 Get-WindowsCapability -Name Rsat.ActiveDirectory.DS-LDS.Tools -Online | Add-WindowsCapability -Online
 
-# Enabled Legacy Right Click Context Menu
-New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -Force
+# ============================================================================
+# Registry Tweaks
+# ============================================================================
+Write-Host "`n=== Applying Registry Tweaks ===" -ForegroundColor Cyan
+
+# Enable Legacy Right Click Context Menu
+Write-Host "Enabling legacy context menu..." -ForegroundColor Yellow
+New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -Force | Out-Null
 Set-ItemProperty -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Name "(Default)" -Value "" -Force
 
-# Modify Registry to have numkey enabled on boot
-New-PSDrive HKU Registry HKEY_USERS
+# Enable NumLock on boot
+Write-Host "Enabling NumLock on boot..." -ForegroundColor Yellow
+New-PSDrive HKU Registry HKEY_USERS -ErrorAction SilentlyContinue | Out-Null
 Set-ItemProperty -Path "HKU:\.Default\Control Panel\Keyboard" -Name "InitialKeyboardIndicators" -Value 2
 
-# Disable hibernation
-powercfg.exe /hibernate off
-
-# Force P Cores on VMware
-powercfg /powerthrottling disable /path "C:\Program Files (x86)\VMware\VMware Workstation\x64\vmware-vmx.exe"
-
 # Disable task bar grouping
+Write-Host "Disabling taskbar grouping..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "EnableTaskGroups" -Value 0
 
 # Enable seconds in taskbar
+Write-Host "Enabling seconds in taskbar..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1
 
 # Setup additional clock for UTC
+Write-Host "Setting up UTC clock..." -ForegroundColor Yellow
 $clock1 = "HKCU:\Control Panel\TimeDate\AdditionalClocks\1"
 if (!(Test-Path $clock1)) {
-    New-Item -Path $clock1
+    New-Item -Path $clock1 -Force | Out-Null
 }
 Set-ItemProperty -Path $clock1 -Name "DisplayName" -Value "UTC"
 Set-ItemProperty -Path $clock1 -Name "Enable" -Value 1
 Set-ItemProperty -Path $clock1 -Name "TzRegKeyName" -Value "UTC"
 
 # Setup additional clock for Central Time
+Write-Host "Setting up Central Time clock..." -ForegroundColor Yellow
 $clock2 = "HKCU:\Control Panel\TimeDate\AdditionalClocks\2"
 if (!(Test-Path $clock2)) {
-    New-Item -Path $clock2
+    New-Item -Path $clock2 -Force | Out-Null
 }
 Set-ItemProperty -Path $clock2 -Name "DisplayName" -Value "Central"
 Set-ItemProperty -Path $clock2 -Name "Enable" -Value 1
 Set-ItemProperty -Path $clock2 -Name "TzRegKeyName" -Value "Central Standard Time"
 
-# Install WinGet Packages
-winget install Microsoft.PowerToys `
-	Microsoft.PowerShell.Preview
+# ============================================================================
+# Power Configuration
+# ============================================================================
+Write-Host "`n=== Configuring Power Settings ===" -ForegroundColor Cyan
 
-# Add Gitconfig and Gitignore symlinks
-New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\git\.gitconfig
-New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\git\.gitconfig-windows
-New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\git\.gitignore
-New-Item -Path ~\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json  -ItemType SymbolicLink -Value $PSScriptRoot\..\dotconfig\Win_Terminal\settings.json
+# Disable hibernation
+Write-Host "Disabling hibernation..." -ForegroundColor Yellow
+powercfg.exe /hibernate off
+
+# Force P Cores on VMware (if VMware is installed)
+$vmwarePath = "C:\Program Files (x86)\VMware\VMware Workstation\x64\vmware-vmx.exe"
+if (Test-Path $vmwarePath) {
+    Write-Host "Configuring VMware power settings..." -ForegroundColor Yellow
+    powercfg /powerthrottling disable /path $vmwarePath
+} else {
+    Write-Host "VMware not found, skipping power throttling config..." -ForegroundColor Gray
+}
+
+# ============================================================================
+# Create Symlinks for Config Files
+# ============================================================================
+Write-Host "`n=== Creating Config Symlinks ===" -ForegroundColor Cyan
+
+$dotconfigPath = Join-Path $PSScriptRoot "..\dotconfig"
+
+if (Test-Path $dotconfigPath) {
+    # Git config symlinks
+    Write-Host "Creating Git config symlinks..." -ForegroundColor Yellow
+    New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value "$dotconfigPath\git\.gitconfig" -Force -ErrorAction SilentlyContinue
+    New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value "$dotconfigPath\git\.gitconfig-windows" -Force -ErrorAction SilentlyContinue
+    New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value "$dotconfigPath\git\.gitignore" -Force -ErrorAction SilentlyContinue
+
+    # Windows Terminal settings symlink
+    Write-Host "Creating Windows Terminal settings symlink..." -ForegroundColor Yellow
+    $wtSettingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+    New-Item -Path $wtSettingsPath -ItemType SymbolicLink -Value "$dotconfigPath\Win_Terminal\settings.json" -Force -ErrorAction SilentlyContinue
+} else {
+    Write-Host "WARNING: dotconfig folder not found at $dotconfigPath" -ForegroundColor Yellow
+    Write-Host "Skipping symlink creation..." -ForegroundColor Yellow
+}
+
+# ============================================================================
+# Create CSOC_Investigations Folder with Custom Permissions
+# ============================================================================
+Write-Host "`n=== Creating CSOC_Investigations Folder ===" -ForegroundColor Cyan
 
 $folderPath = "C:\CSOC_Investigations"
-mkdir $folderPath
+if (!(Test-Path $folderPath)) {
+    Write-Host "Creating folder at $folderPath..." -ForegroundColor Yellow
+    New-Item -Path $folderPath -ItemType Directory -Force | Out-Null
+}
+
 # Get current ACL and disable inheritance
+Write-Host "Configuring folder permissions..." -ForegroundColor Yellow
 $acl = Get-Acl $folderPath
 $acl.SetAccessRuleProtection($true, $false)  # Disable inheritance, don't preserve existing
 
 # Clear existing access rules
-$acl.Access | ForEach-Object { $acl.RemoveAccessRule($_) }
+$acl.Access | ForEach-Object { $acl.RemoveAccessRule($_) | Out-Null }
 
 # Define the groups
 $groups = @("Administrators", "Authenticated Users", "Users")
@@ -148,6 +202,8 @@ foreach ($group in $groups) {
 
 # Apply the ACL
 Set-Acl -Path $folderPath -AclObject $acl
+Write-Host "ACL configuration applied successfully" -ForegroundColor Green
+
 # ============================================================================
 # Windows Terminal Multi-Profile Startup Task
 # Creates a scheduled task that launches Windows Terminal with PowerShell,
@@ -197,6 +253,14 @@ if (Test-Path $wtExePath) {
     Write-Host "Windows Terminal not found!" -ForegroundColor Red
     Write-Host "Please install Windows Terminal from the Microsoft Store and try again." -ForegroundColor Yellow
 }
+
+# ============================================================================
 # Restart Windows Explorer
+# ============================================================================
+Write-Host "`n=== Restarting Windows Explorer ===" -ForegroundColor Cyan
 Stop-Process -Name explorer -Force
+Start-Sleep -Seconds 2
 Start-Process explorer
+
+Write-Host "`n=== Setup Complete! ===" -ForegroundColor Green
+Write-Host "Please restart your computer for all changes to take effect.`n" -ForegroundColor Yellow
