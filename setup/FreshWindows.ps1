@@ -1,31 +1,29 @@
-# Installs chocolatey
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+# ============================================================================
+# Windows Fresh Setup Script - Winget Edition
+# ============================================================================
 
-choco feature enable -n allowGlobalConfirmation
+Write-Host "`n=== Windows Setup Script ===" -ForegroundColor Cyan
+Write-Host "Setting up your Windows environment...`n" -ForegroundColor White
 
-choco install notepadplusplus `
-	vscode `
-	sharex `
-	#googlechrome.dev `
-	firefox `
-	brave `
-	firefox-dev --pre `
-	#mobaxterm `
-	git.install `
-	wireshark `
-	burp-suite-free-edition `
-	1password `
-	adobereader `
-	7zip.install `
-	discord `
-	mattermost-desktop `
-	firacode `
-	nerd-fonts-Meslo `
-	spotify `
-	obsidian `
-	sqlitestudio `
+# ============================================================================
+# Install packages from winget baseline
+# ============================================================================
+Write-Host "`n=== Installing Winget Packages ===" -ForegroundColor Cyan
 
-# Installs WSL
+$baselineJson = Join-Path $PSScriptRoot "baseline.json"
+
+if (Test-Path $baselineJson) {
+    Write-Host "Found baseline.json, importing packages..." -ForegroundColor Green
+    winget import -i $baselineJson --accept-package-agreements --accept-source-agreements
+} else {
+    Write-Host "WARNING: baseline.json not found at $baselineJson" -ForegroundColor Yellow
+    Write-Host "Skipping winget package installation..." -ForegroundColor Yellow
+    Write-Host "Please ensure baseline.json is in the same directory as this script.`n" -ForegroundColor Yellow
+}
+
+# Install additional packages not in baseline (if needed)
+Write-Host "`nInstalling PowerToys and PowerShell Preview..." -ForegroundColor Yellow
+
 wsl --install
 
 # Installs Get-ADUser and other AD Tools
