@@ -91,6 +91,18 @@ Set-ItemProperty -Path "HKU:\.Default\Control Panel\Keyboard" -Name "InitialKeyb
 Write-Host "Disabling taskbar grouping..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "EnableTaskGroups" -Value 0
 
+# Left Align Taskbar
+Write-Host "Aligning taskbar to the left..." -ForegroundColor Yellow
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1
+
+# Disable Task View from Taskbar
+Write-Host "Disabling task view from taskbar..." -ForegroundColor Yellow
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Value 0
+
+# Disable Searchbox from Taskbar
+Write-Host "Disabling searchbox from taskbar..." -ForegroundColor Yellow
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value 0
+
 # Enable seconds in taskbar
 Write-Host "Enabling seconds in taskbar..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1
