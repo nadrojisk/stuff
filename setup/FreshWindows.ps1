@@ -21,9 +21,6 @@ if (Test-Path $baselineJson) {
     Write-Host "Please ensure baseline.json is in the same directory as this script.`n" -ForegroundColor Yellow
 }
 
-# Install additional packages not in baseline (if needed)
-Write-Host "`nInstalling PowerToys and PowerShell Preview..." -ForegroundColor Yellow
-
 # ============================================================================
 # Install WSL
 # ============================================================================
@@ -77,37 +74,35 @@ Get-WindowsCapability -Name Rsat.ActiveDirectory.DS-LDS.Tools -Online | Add-Wind
 # ============================================================================
 Write-Host "`n=== Applying Registry Tweaks ===" -ForegroundColor Cyan
 
-# Enable Legacy Right Click Context Menu
 Write-Host "Enabling legacy context menu..." -ForegroundColor Yellow
 New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -Force | Out-Null
 Set-ItemProperty -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Name "(Default)" -Value "" -Force
 
-# Enable NumLock on boot
 Write-Host "Enabling NumLock on boot..." -ForegroundColor Yellow
 New-PSDrive HKU Registry HKEY_USERS -ErrorAction SilentlyContinue | Out-Null
 Set-ItemProperty -Path "HKU:\.Default\Control Panel\Keyboard" -Name "InitialKeyboardIndicators" -Value 2
 
-# Disable task bar grouping
 Write-Host "Disabling taskbar grouping..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "EnableTaskGroups" -Value 0
 
-# Left Align Taskbar
 Write-Host "Aligning taskbar to the left..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1
 
-# Disable Task View from Taskbar
 Write-Host "Disabling task view from taskbar..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Value 0
 
-# Disable Searchbox from Taskbar
 Write-Host "Disabling searchbox from taskbar..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Value 0
 
-# Enable seconds in taskbar
 Write-Host "Enabling seconds in taskbar..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Value 1
 
-# Setup additional clock for UTC
+Write-Host "Hiding Desktop Icons..." -ForegroundColor Yellow
+Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideIcons"
+
+Write-Host "Changing default timezone to Pacific..."  -ForgroundColor Yellow
+tzutil /s "Pacific Standard Time"
+
 Write-Host "Setting up UTC clock..." -ForegroundColor Yellow
 $clock1 = "HKCU:\Control Panel\TimeDate\AdditionalClocks\1"
 if (!(Test-Path $clock1)) {
@@ -117,7 +112,6 @@ Set-ItemProperty -Path $clock1 -Name "DisplayName" -Value "UTC"
 Set-ItemProperty -Path $clock1 -Name "Enable" -Value 1
 Set-ItemProperty -Path $clock1 -Name "TzRegKeyName" -Value "UTC"
 
-# Setup additional clock for Central Time
 Write-Host "Setting up Central Time clock..." -ForegroundColor Yellow
 $clock2 = "HKCU:\Control Panel\TimeDate\AdditionalClocks\2"
 if (!(Test-Path $clock2)) {
