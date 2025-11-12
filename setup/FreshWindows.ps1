@@ -80,7 +80,7 @@ Set-ItemProperty -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50
 
 Write-Host "Enabling NumLock on boot..." -ForegroundColor Yellow
 New-PSDrive HKU Registry HKEY_USERS -ErrorAction SilentlyContinue | Out-Null
-Set-ItemProperty -Path "HKU:\.Default\Control Panel\Keyboard" -Name "InitialKeyboardIndicators" -Value 2
+Set-ItemProperty -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators' -Value '2'
 
 Write-Host "Disabling taskbar grouping..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "EnableTaskGroups" -Value 0
