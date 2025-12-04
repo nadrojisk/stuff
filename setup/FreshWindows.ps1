@@ -21,6 +21,8 @@ if (Test-Path $baselineJson) {
     Write-Host "Please ensure baseline.json is in the same directory as this script.`n" -ForegroundColor Yellow
 }
 
+winget install --id Git.Git --override "/VERYSILENT /NORESTART /COMPONENTS='icons,assoc,assoc_sh'" --force
+
 # ============================================================================
 # Install WSL
 # ============================================================================
@@ -173,22 +175,36 @@ if (!(Test-Path $folderPath)) {
     New-Item -Path $folderPath -ItemType Directory -Force | Out-Null
 }
 
-# Get current ACL and disable inheritance
+# Get current ACL and enable inheritance
 Write-Host "Configuring folder permissions..." -ForegroundColor Yellow
 $acl = Get-Acl $folderPath
-$acl.SetAccessRuleProtection($true, $false)  # Disable inheritance, don't preserve existing
+$acl.SetAccessRuleProtection($false, $true)  # Enable inheritance, preserve existing
 
-# Clear existing access rules
-$acl.Access | ForEach-Object { $acl.RemoveAccessRule($_) | Out-Null }
+# Remove any existing deny rules to avoid duplicates
+$acl.Access | Where-Object { 
+    $_.IdentityReference -eq "Everyone" -and $_.AccessControlType -eq "Deny" 
+} | ForEach-Object { 
+    $acl.RemoveAccessRule($_) | Out-Null 
+}
 
-# Define the groups
+# Add Deny Execute rule for Everyone (applies to files only)
+$denyExecuteRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
+    "Everyone",
+    "ExecuteFile",
+    "ObjectInherit",
+    "None",
+    "Deny"
+)
+$acl.AddAccessRule($denyExecuteRule)
+
+# Define the groups for explicit permissions
 $groups = @("Administrators", "Authenticated Users", "Users")
 
 foreach ($group in $groups) {
-    # Read/Write for files only (Object Inherit, No Propagate)
+    # Read/Write for files only (Object Inherit, Inherit Only)
     $fileRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
         $group,
-        "Read,Write,Delete",
+        "Read,Write,Delete,Synchronize",
         "ObjectInherit",
         "InheritOnly",
         "Allow"
@@ -209,6 +225,9 @@ foreach ($group in $groups) {
 # Apply the ACL
 Set-Acl -Path $folderPath -AclObject $acl
 Write-Host "ACL configuration applied successfully" -ForegroundColor Green
+Write-Host "  - Executables cannot be run from this folder" -ForegroundColor Green
+Write-Host "  - Users can read, write, and delete files" -ForegroundColor Green
+Write-Host "  - Inheritance enabled for automatic permission application" -ForegroundColor Green
 
 # ============================================================================
 # Windows Terminal Multi-Profile Startup Task
