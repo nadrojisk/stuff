@@ -1,0 +1,64 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "provider": {
+    "pnnl": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://ai-incubator-api.pnnl.gov/v1",
+        "apiKey": "{env:PNNL_INCUBATOR_API_KEY}"
+      },
+      "models": {
+        "claude-sonnet-4-6-project": {},
+        "claude-opus-4-6-v1-project": {},
+        "claude-haiku-4-5-20251001-v1-project": {},
+        "gpt-4o-project": {},
+        "gemini-2.5-pro-project": {},
+        "o3-project": {}
+      }
+    }
+  },
+  "mcp":{
+           "kusto": {
+        "type": "remote",
+        "url": "https://bifrost.pnnl.gov/kusto-mcp-dev/mcp",
+        "oauth": {
+          "clientId": "a219bc81-ea44-4b28-b951-a7dddc725a67",
+          "scope": "api://a219bc81-ea44-4b28-b951-a7dddc725a67/access-as-user",
+          "redirectUri": "http://localhost:6274/oauth/callback"
+          }
+    },
+    "atlassian": {
+      "type": "remote",
+      "url": "https://bifrost.pnnl.gov/atlassian-dev-oauth/mcp",
+      "oauth": {
+        "clientId": "a219bc81-ea44-4b28-b951-a7dddc725a67",
+        "scope": "api://a219bc81-ea44-4b28-b951-a7dddc725a67/access-as-user offline_access openid profile",
+        "redirectUri": "http://localhost:6274/oauth/callback"
+      },
+      "headers": {
+        "X-Atlassian-Jira-Personal-Token": "{env:JIRA_PERSONAL_TOKEN}",
+        "X-Atlassian-Jira-Url": "https://jira.pnnl.gov",
+        "X-Atlassian-Confluence-Personal-Token": "{env:CONFLUENCE_PERSONAL_TOKEN}",
+        "X-Atlassian-Confluence-Url": "https://confluence.pnnl.gov/confluence"
+      }
+    },
+    "thehive": {
+      "type": "remote",
+      "url": "https://bifrost.pnnl.gov/thehive-dev-oauth/mcp",
+      "oauth": {
+        "clientId": "a219bc81-ea44-4b28-b951-a7dddc725a67",
+        "scope": "api://a219bc81-ea44-4b28-b951-a7dddc725a67/access-as-user offline_access openid profile",
+        "redirectUri": "http://localhost:6274/oauth/callback"
+      },
+      "headers": {
+          "X-THEHIVE-AUTHORIZATION-HEADER": "Bearer {env:THEHIVEDEV_BEARER_TOKEN}"
+      }
+    }
+  },
+  "permission": {
+    "external_directory": {
+      "/mnt/d/OneDrive - PNNL/Documents/Brain/**": "allow"
+    }
+  }
+}
