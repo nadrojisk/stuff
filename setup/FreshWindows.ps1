@@ -153,7 +153,7 @@ if (Test-Path $dotconfigPath) {
     Write-Host "Creating Git config symlinks..." -ForegroundColor Yellow
     New-Item -Path ~\.gitconfig -ItemType SymbolicLink -Value "$dotconfigPath\git\.gitconfig" -Force -ErrorAction SilentlyContinue
     New-Item -Path ~\.gitconfig-windows -ItemType SymbolicLink -Value "$dotconfigPath\git\.gitconfig-windows" -Force -ErrorAction SilentlyContinue
-    New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value "$dotconfigPath\git\.gitignore" -Force -ErrorAction SilentlyContinue
+    New-Item -Path ~\.gitignore -ItemType SymbolicLink -Value "$dotconfigPath\git\xdg\ignore" -Force -ErrorAction SilentlyContinue
 
     # Windows Terminal settings symlink
     Write-Host "Creating Windows Terminal settings symlink..." -ForegroundColor Yellow

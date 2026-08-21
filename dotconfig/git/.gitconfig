@@ -5,7 +5,7 @@
     path = ~/.gitconfig-wsl
 
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.config/git/ignore
     ignoreCase = true
     safecrlf = false
     whitespace = -trailing-space
