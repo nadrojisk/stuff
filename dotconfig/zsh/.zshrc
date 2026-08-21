@@ -115,6 +115,9 @@ function _op_load() {
         op-unlock || return 1
     fi
 
+    # Touch the file to extend TTL on each use
+    touch "$_OP_SECRETS_FILE"
+
     while IFS='=' read -r key val; do
         [[ -z "$key" ]] && continue
         printf -v "$key" '%s' "$val"
