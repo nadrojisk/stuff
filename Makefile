@@ -22,10 +22,23 @@ LINKS := \
 	$(HOME)/.config/glab-cli/aliases.yml|$(DOT)/glab-cli/aliases.yml \
 	$(HOME)/.config/timewarrior/timewarrior.cfg|$(DOT)/timewarrior/timewarrior.cfg
 
-.PHONY: install check help
+.PHONY: install check dirs help
+
+# ── dirs ──────────────────────────────────────────────────────────────────────
+# Create XDG state/cache dirs that tools expect to exist but won't create themselves.
+dirs: ## Create required XDG state and cache directories
+	@mkdir -p \
+		$(HOME)/.local/state/zsh \
+		$(HOME)/.local/state/less \
+		$(HOME)/.local/state/psql \
+		$(HOME)/.cache/zsh \
+		$(HOME)/.cache/terraform \
+		$(HOME)/.config/npm \
+		$(HOME)/.config/terraform
+	@echo "  dirs    XDG state/cache directories created"
 
 # ── install ───────────────────────────────────────────────────────────────────
-install: ## Symlink all dotfiles into place
+install: dirs ## Symlink all dotfiles into place
 	@$(foreach pair,$(LINKS), \
 		$(eval dst := $(word 1,$(subst |, ,$(pair)))) \
 		$(eval src := $(word 2,$(subst |, ,$(pair)))) \
