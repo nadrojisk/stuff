@@ -10,6 +10,7 @@ LINKS := \
 	$(HOME)/.config/git/ignore|$(DOT)/git/xdg/ignore \
 	$(HOME)/.bashrc|$(DOT)/bash/.bashrc \
 	$(HOME)/.config/fish/config.fish|$(DOT)/fish/config.fish \
+	$(HOME)/.config/fish/functions|$(DOT)/fish/functions \
 	$(HOME)/.zshrc|$(DOT)/zsh/.zshrc \
 	$(HOME)/.zprofile|$(DOT)/zsh/.zprofile \
 	$(HOME)/.zshenv|$(DOT)/zsh/.zshenv \
