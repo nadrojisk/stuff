@@ -69,63 +69,82 @@ _wslenv_base=$(echo "$WSLENV" | tr ':' '\n' | grep -Ev '^(CLAUDE_CODE_USE_FOUNDR
 export WSLENV="${_wslenv_base:+$_wslenv_base:}$_wslenv_extras"
 unset _wslenv_extras _wslenv_base
 
-# 1Password credential cache — TTL in seconds (1 hour)
+# 1Password credential cache — shared tmpfs file, one unlock per WSL session
+_OP_SECRETS_FILE="/tmp/op_secrets_$(id -u)"
 _OP_CACHE_TTL=3600
 
-_get_op_secret() {
-    local cache_var="$1" ts_var="$2" op_path="$3"
-    local cached_val cached_ts now age
+function op-unlock() {
+    echo "Unlocking 1Password secrets..." >&2
+    local incubator jira confluence az_user az_cred az_tenant thehive
+    incubator=$(op.exe read "op://PNNL/Incubator CSOC Devwork/credential" 2>/dev/null)
+    jira=$(op.exe read "op://PNNL/Jira PAT/credential" 2>/dev/null)
+    confluence=$(op.exe read "op://PNNL/Confluence PAT/credential" 2>/dev/null)
+    az_user=$(op.exe read "op://PNNL/Asgard Azure Service Principal/username" 2>/dev/null)
+    az_cred=$(op.exe read "op://PNNL/Asgard Azure Service Principal/credential" 2>/dev/null)
+    az_tenant=$(op.exe read "op://PNNL/Asgard Azure Service Principal/tenant_id" 2>/dev/null)
+    thehive=$(op.exe read "op://PNNL/TheHiveDev/credential" 2>/dev/null)
 
-    # Check cache: must exist, be non-empty, and within TTL
-    cached_val="${!cache_var}"
-    if [[ -n "$cached_val" ]]; then
-        cached_ts="${!ts_var}"
-        if [[ -n "$cached_ts" ]]; then
-            now=$(date +%s)
-            age=$(( now - cached_ts ))
-            if (( age < _OP_CACHE_TTL )); then
-                echo "$cached_val"
-                return 0
-            fi
-        fi
-    fi
-
-    local secret
-    secret=$(op.exe read "$op_path" 2>/dev/null)
-    if [[ -z "$secret" ]]; then
-        echo "error: failed to retrieve $op_path from 1Password" >&2
+    if [[ -z "$incubator" ]]; then
+        echo "error: failed to retrieve secrets from 1Password" >&2
         return 1
     fi
-    printf -v "$cache_var" '%s' "$secret"
-    printf -v "$ts_var" '%s' "$(date +%s)"
-    echo "$secret"
+
+    printf '%s\n' \
+        "OP_INCUBATOR=$incubator" \
+        "OP_JIRA=$jira" \
+        "OP_CONFLUENCE=$confluence" \
+        "OP_AZ_USER=$az_user" \
+        "OP_AZ_CRED=$az_cred" \
+        "OP_AZ_TENANT=$az_tenant" \
+        "OP_THEHIVE=$thehive" \
+        > "$_OP_SECRETS_FILE"
+    chmod 600 "$_OP_SECRETS_FILE"
+    echo "1Password secrets cached." >&2
+}
+
+function _op_load() {
+    local needs_unlock=0
+    if [[ ! -f "$_OP_SECRETS_FILE" ]]; then
+        needs_unlock=1
+    else
+        local age=$(( $(date +%s) - $(stat -c %Y "$_OP_SECRETS_FILE") ))
+        (( age > _OP_CACHE_TTL )) && needs_unlock=1
+    fi
+
+    if (( needs_unlock )); then
+        op-unlock || return 1
+    fi
+
+    while IFS='=' read -r key val; do
+        [[ -z "$key" ]] && continue
+        printf -v "$key" '%s' "$val"
+    done < "$_OP_SECRETS_FILE"
+}
+
+function op-lock() {
+    rm -f "$_OP_SECRETS_FILE"
+    echo "1Password secrets cleared." >&2
 }
 
 function claude() {
-    local key
-    key=$(_get_op_secret _INCUBATOR_KEY_CACHE _INCUBATOR_KEY_TS "op://PNNL/Incubator CSOC Devwork/credential") || return 1
-    ANTHROPIC_FOUNDRY_API_KEY="$key" command claude "$@"
+    _op_load || return 1
+    ANTHROPIC_FOUNDRY_API_KEY="$OP_INCUBATOR" command claude "$@"
 }
 
 function opencode() {
-    local key jira confluence
-    key=$(_get_op_secret _INCUBATOR_KEY_CACHE _INCUBATOR_KEY_TS "op://PNNL/Incubator CSOC Devwork/credential") || return 1
-    jira=$(_get_op_secret _JIRA_PAT_CACHE _JIRA_PAT_TS "op://PNNL/Jira PAT/credential") || return 1
-    confluence=$(_get_op_secret _CONFLUENCE_PAT_CACHE _CONFLUENCE_PAT_TS "op://PNNL/Confluence PAT/credential") || return 1
-    PNNL_INCUBATOR_API_KEY="$key" \
-        JIRA_PERSONAL_TOKEN="$jira" \
-        CONFLUENCE_PERSONAL_TOKEN="$confluence" \
+    _op_load || return 1
+    PNNL_INCUBATOR_API_KEY="$OP_INCUBATOR" \
+        JIRA_PERSONAL_TOKEN="$OP_JIRA" \
+        CONFLUENCE_PERSONAL_TOKEN="$OP_CONFLUENCE" \
+        THEHIVEDEV_BEARER_TOKEN="$OP_THEHIVE" \
         command opencode "$@"
 }
 
 function az-login() {
-    local user cred tenant
-    user=$(_get_op_secret _AZ_USERNAME_CACHE _AZ_USERNAME_TS "op://PNNL/Asgard Azure Service Principal/username") || return 1
-    cred=$(_get_op_secret _AZ_CREDENTIAL_CACHE _AZ_CREDENTIAL_TS "op://PNNL/Asgard Azure Service Principal/credential") || return 1
-    tenant=$(_get_op_secret _AZ_TENANT_CACHE _AZ_TENANT_TS "op://PNNL/Asgard Azure Service Principal/tenant_id") || return 1
-    AZURE_CLIENT_SECRET="$cred" az login --service-principal \
-        -u "$user" \
-        --tenant "$tenant"
+    _op_load || return 1
+    AZURE_CLIENT_SECRET="$OP_AZ_CRED" az login --service-principal \
+        -u "$OP_AZ_USER" \
+        --tenant "$OP_AZ_TENANT"
 }
 
 # ── ALIASES ───────────────────────────────────────────────────────────────────
