@@ -30,5 +30,6 @@
             ],
             "group": "build",
             "label": "cargo build"
-        ]
-    }
+        }
+    ]
+}

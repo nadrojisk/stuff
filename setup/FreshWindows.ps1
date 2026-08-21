@@ -158,7 +158,7 @@ if (Test-Path $dotconfigPath) {
     # Windows Terminal settings symlink
     Write-Host "Creating Windows Terminal settings symlink..." -ForegroundColor Yellow
     $wtSettingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-    New-Item -Path $wtSettingsPath -ItemType SymbolicLink -Value "$dotconfigPath\Win_Terminal\settings.json" -Force -ErrorAction SilentlyContinue
+    New-Item -Path $wtSettingsPath -ItemType SymbolicLink -Value "$dotconfigPath\windows_terminal\settings.json" -Force -ErrorAction SilentlyContinue
 } else {
     Write-Host "WARNING: dotconfig folder not found at $dotconfigPath" -ForegroundColor Yellow
     Write-Host "Skipping symlink creation..." -ForegroundColor Yellow

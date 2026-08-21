@@ -17,7 +17,7 @@ function Get-CasesByTask {
         "sec-ch-ua"          = "`"Chromium`";v=`"116`", `"Not)A;Brand`";v=`"24`", `"Google Chrome`";v=`"116`""
         "sec-ch-ua-mobile"   = "?0"
         "sec-ch-ua-platform" = "`"Windows`""
-        Authorization        = "Bearer Bearer <API_Key>"
+        Authorization        = "Bearer <API_Key>"
     }
 
     Invoke-WebRequest -UseBasicParsing -Uri "https://thehive.pnl.gov/api/v1/query?name=search-listLog" `
