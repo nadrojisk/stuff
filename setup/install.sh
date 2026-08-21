@@ -13,10 +13,10 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-info()    { echo -e "${GREEN}[install]${NC} $*"; }
-warn()    { echo -e "${YELLOW}[warn]${NC}    $*"; }
-skip()    { echo -e "${YELLOW}[skip]${NC}    $*"; }
-error()   { echo -e "${RED}[error]${NC}   $*" >&2; }
+info()  { echo -e "${GREEN}[install]${NC} $*"; }
+warn()  { echo -e "${YELLOW}[warn]${NC}    $*"; }
+skip()  { echo -e "${YELLOW}[skip]${NC}    $*"; }
+error() { echo -e "${RED}[error]${NC}   $*" >&2; }
 
 # link <src> <dst>
 # Creates a symlink at <dst> pointing to <src>.
@@ -60,24 +60,42 @@ link() {
 info "Linking dotfiles from $DOTCONFIG"
 
 # git
-link "$DOTCONFIG/git/.gitconfig"     "$HOME/.gitconfig"
-link "$DOTCONFIG/git/.gitconfig-wsl" "$HOME/.gitconfig-wsl"
-link "$DOTCONFIG/git/.gitignore"     "$HOME/.gitignore"
+link "$DOTCONFIG/git/.gitconfig"         "$HOME/.gitconfig"
+link "$DOTCONFIG/git/.gitconfig-wsl"     "$HOME/.gitconfig-wsl"
+link "$DOTCONFIG/git/xdg/ignore"         "$HOME/.config/git/ignore"
+
+# bash
+link "$DOTCONFIG/bash/.bashrc"           "$HOME/.bashrc"
 
 # fish
-link "$DOTCONFIG/fish/config.fish"   "$HOME/.config/fish/config.fish"
+link "$DOTCONFIG/fish/config.fish"       "$HOME/.config/fish/config.fish"
 
 # zsh
-link "$DOTCONFIG/zsh/.zshrc"         "$HOME/.zshrc"
+link "$DOTCONFIG/zsh/.zshrc"            "$HOME/.zshrc"
+link "$DOTCONFIG/zsh/.zprofile"         "$HOME/.zprofile"
+link "$DOTCONFIG/zsh/.zshenv"           "$HOME/.zshenv"
 
 # vim
-link "$DOTCONFIG/vim/.vimrc"         "$HOME/.vimrc"
+link "$DOTCONFIG/vim/.vimrc"             "$HOME/.vimrc"
 
 # nvim (whole directory)
-link "$DOTCONFIG/nvim"               "$HOME/.config/nvim"
+link "$DOTCONFIG/nvim"                   "$HOME/.config/nvim"
 
 # tmux
-link "$DOTCONFIG/tmux/.tmux.conf"    "$HOME/.tmux.conf"
+link "$DOTCONFIG/tmux/.tmux.conf"        "$HOME/.tmux.conf"
+
+# ssh
+link "$DOTCONFIG/ssh/config"             "$HOME/.ssh/config"
+link "$DOTCONFIG/ssh/allowed_signers"    "$HOME/.ssh/allowed_signers"
+
+# opencode
+link "$DOTCONFIG/opencode"               "$HOME/.config/opencode"
+
+# glab-cli
+link "$DOTCONFIG/glab-cli/aliases.yml"  "$HOME/.config/glab-cli/aliases.yml"
+
+# timewarrior
+link "$DOTCONFIG/timewarrior/timewarrior.cfg" "$HOME/.config/timewarrior/timewarrior.cfg"
 
 # ── done ──────────────────────────────────────────────────────────────────────
 
@@ -85,3 +103,12 @@ echo ""
 info "Done. Reload your shell to pick up changes."
 info "  fish: source ~/.config/fish/config.fish"
 info "  zsh:  source ~/.zshrc"
+info "  bash: source ~/.bashrc"
+info ""
+info "Note: glab-cli/config.yml is NOT symlinked — populate tokens with:"
+info "  glab auth login --hostname devops.pnnl.gov"
+info "  glab auth login --hostname infra-gitlab.pnl.gov"
+info ""
+info "Note: oh-my-posh theme (dotconfig/oh-my-posh/custom.omp.json) is backed"
+info "  up here but lives at '/mnt/d/OneDrive - PNNL/Documents/custom.omp.json'"
+info "  on the Windows side. Copy it there on a fresh machine."
