@@ -9,13 +9,13 @@
     ignoreCase = true
     safecrlf = false
     whitespace = -trailing-space
-    filemode = false
-    autocrlf = input
+	fileMode = false
+	autocrlf = input
     #eol = lf
-    editor = code --wait
+    #editor = code --wait
 	longpaths = true
 [user]
-    name = Sosnowski, Jordan
+    name = Jordan Sosnowski
     email = jordan.sosnowski@pnnl.gov
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7453USdRN6KA1yvlPFXKY0xWSM2D8o/lJsb2uMXB9+
 [color]
@@ -23,9 +23,9 @@
 [pull]
     rebase = false
 [gpg]
-    format = ssh
+	format = ssh
 [commit]
-    gpgsign = true
+	gpgsign = true
 [alias]
   # List available aliases
   aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
@@ -63,3 +63,5 @@
 	directory = %(prefix)///wsl.localhost/Ubuntu_22.04/home/sosn071/Documents/Repos/Stash/csoc_splunk_app
 [init]
 	defaultBranch = main
+[gpg "ssh"]
+	allowedSignersFile = /home/sosn071/.ssh/allowed_signers
