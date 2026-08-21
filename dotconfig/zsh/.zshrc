@@ -8,7 +8,7 @@ fi
 export PATH=/home/sosn071/.opencode/bin:$PATH
 
 # ── OH MY ZSH ─────────────────────────────────────────────────────────────────
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="$XDG_DATA_HOME/oh-my-zsh"
 ZSH_THEME=""
 DISABLE_UPDATE_PROMPT=true
 
@@ -43,7 +43,7 @@ export BROWSER=wslview
 unsetopt extendedglob
 
 # ── NVM ───────────────────────────────────────────────────────────────────────
-export NVM_DIR="$HOME/.nvm"
+# NVM_DIR set in .zshenv ($XDG_DATA_HOME/nvm)
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
