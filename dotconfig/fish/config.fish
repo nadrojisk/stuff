@@ -116,6 +116,9 @@ function _op_load
         op-unlock; or return 1
     end
 
+    # Touch the file to extend TTL on each use
+    touch $_OP_SECRETS_FILE
+
     # Parse env-file into unexported fish globals
     while read -l line
         set -l key (string split -m1 "=" $line)[1]
