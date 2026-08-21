@@ -2,9 +2,9 @@
 #
 # Borrowed from: https://github.com/hugsy/stuff/blob/master/update-trinity.sh
 #
-# Install/update Capstone/Keystone/Unicorn from GitHub with Python/Python3 bindings
+# Install/update Capstone/Keystone/Unicorn from GitHub with Python 3 bindings
 # First time, run:
-# $ sudo apt-get install git cmake gcc g++ pkg-config libglib2.0-dev
+# $ sudo apt-get install git cmake gcc g++ pkg-config libglib2.0-dev python3-dev
 #
 
 LOGFILE=/tmp/update-trinity.log
@@ -26,18 +26,18 @@ sed -i "s/make -j8/make -j${NB_CPU}/g" ../make-share.sh
 ../make-share.sh
 sudo make install
 cd ../bindings/python
-sudo make install install3
+sudo python3 setup.py install
 popd
 echo "[+] Done" >&2
 
 echo "[+] Installing capstone + bindings" >&2
 pushd /tmp
-git clone --quiet https://github.com/aquynh/capstone.git
+git clone --quiet https://github.com/capstone-engine/capstone.git
 cd capstone
 ./make.sh default -j${NB_CPU}
 sudo ./make.sh install
 cd ./bindings/python
-sudo make install install3
+sudo python3 setup.py install
 popd
 echo "[+] Done" >&2
 
@@ -45,10 +45,10 @@ echo "[+] Installing unicorn + bindings" >&2
 pushd /tmp
 git clone --quiet https://github.com/unicorn-engine/unicorn.git
 cd unicorn
-UNICORN_QEMU_FLAGS="--python=`which python2`" MAKE_JOBS=${NB_CPU} ./make.sh
+MAKE_JOBS=${NB_CPU} ./make.sh
 sudo ./make.sh install
 cd ./bindings/python
-sudo make install install3
+sudo python3 setup.py install
 popd
 echo "[+] Done" >&2
 
