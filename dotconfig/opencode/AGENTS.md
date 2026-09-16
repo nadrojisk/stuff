@@ -11,6 +11,10 @@ You have access to a `note-taker` subagent that writes to the user's Obsidian va
 
 **Do not ask for permission** — just delegate to the `note-taker` subagent immediately when any of the above applies. After it finishes, briefly mention the file path it wrote.
 
+**When delegating to `note-taker`**, always include explicit instructions to:
+- Check and update parent index/MOC pages up the directory tree for every file written
+- Create missing index files if sibling notes exist in that folder
+
 **Do not delegate for:**
 - Ephemeral session context (e.g., the current state of a file you're editing)
 - Things the user will clearly remember or that are already well-documented
