@@ -1,5 +1,5 @@
 set -g _OP_SECRETS_FILE /tmp/op_secrets_(id -u)
-set -g _OP_CACHE_TTL 3600
+set -g _OP_CACHE_TTL 86400
 
 function op-unlock
     echo "Unlocking 1Password secrets..." >&2
