@@ -9,12 +9,165 @@
         "apiKey": "{env:PNNL_INCUBATOR_API_KEY}"
       },
       "models": {
-        "claude-sonnet-4-6-project": {},
+        "gpt-5.1-project": {
+          "name": "GPT-5.1 (Incubator)",
+          "cost": { "input": 1.587, "output": 12.65 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gpt-5.2-project": {
+          "name": "GPT-5.2 (Incubator)",
+          "cost": { "input": 2.214, "output": 17.71 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gpt-5.4-project": {
+          "name": "GPT-5.4 (Incubator)",
+          "cost": { "input": 3.162, "output": 18.97 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gpt-5.5-project": {
+          "name": "GPT-5.5 (Incubator)",
+          "cost": { "input": 6.325, "output": 37.95 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gpt-5.4-nano-project": {
+          "name": "GPT-5.4 Nano (Incubator)",
+          "cost": { "input": 0.253, "output": 1.581 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "gpt-4.1-project": {
+          "name": "GPT-4.1 (Incubator)",
+          "cost": { "input": 2.53, "output": 10.12 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "grok-4-20-reasoning-project": {
+          "name": "Grok 4.20 Reasoning (Incubator)",
+          "cost": { "input": 1.581, "output": 3.162 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "grok-4-20-non-reasoning-project": {
+          "name": "Grok 4.20 Non-Reasoning (Incubator)",
+          "cost": { "input": 2.3, "output": 6.9 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "grok-4-1-fast-reasoning-project": {
+          "name": "Grok 4.1 Fast Reasoning (Incubator)",
+          "cost": { "input": 0.23, "output": 0.575 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "grok-4-1-fast-non-reasoning-project": {
+          "name": "Grok 4.1 Fast Non-Reasoning (Incubator)",
+          "cost": { "input": 0.23, "output": 0.575 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "o3-project": {
+          "name": "O3 (Incubator)",
+          "cost": { "input": 2.53, "output": 10.12 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "o4-mini-project": {
+          "name": "O4 Mini (Incubator)",
+          "cost": { "input": 1.392, "output": 5.566 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "claude-opus-5-project": {
+          "name": "Claude Opus 5 (Incubator)",
+          "cost": { "input": 6.325, "output": 31.62, "cache_read": 0.6325 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "claude-opus-4-8-project": {
+          "name": "Claude Opus 4.8 (Incubator)",
+          "cost": { "input": 6.325, "output": 31.62, "cache_read": 0.6325 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "claude-opus-4-7-project": {
+          "name": "Claude Opus 4.7 (Incubator)",
+          "cost": { "input": 6.325, "output": 31.62, "cache_read": 0.6325 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
         "claude-opus-4-6-v1-project": {},
-        "claude-haiku-4-5-20251001-v1-project": {},
+        "claude-sonnet-5-project": {
+          "name": "Claude Sonnet 5 (Incubator)",
+          "cost": { "input": 2.53, "output": 12.65, "cache_read": 0.253 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "claude-sonnet-4-6-project": {
+          "name": "Claude Sonnet 4.6 (Incubator)",
+          "cost": { "input": 3.795, "output": 18.97, "cache_read": 0.3795 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "claude-sonnet-4-5-20250929-v1-project": {
+          "name": "Claude Sonnet 4.5 (Incubator)",
+          "cost": { "input": 3.795, "output": 18.97, "cache_read": 0.3795 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "claude-haiku-4-5-20251001-v1-project": {
+          "name": "Claude Haiku 4.5 (Incubator)",
+          "cost": { "input": 1.265, "output": 6.325, "cache_read": 0.1265 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gemini-3.1-flash-lite-project": {
+          "name": "Gemini 3.1 Flash Lite (Incubator)",
+          "cost": { "input": 0.3163, "output": 1.897 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "video", "audio", "pdf"], "output": ["text"] }
+        },
+        "gemini-3.5-flash-project": {
+          "name": "Gemini 3.5 Flash (Incubator)",
+          "cost": { "input": 1.897, "output": 11.39 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "video", "audio", "pdf"], "output": ["text"] }
+        },
+        "gemma-4-26b-a4b-project": {
+          "name": "Gemma 4 26B (Incubator)",
+          "cost": { "input": 0.1725, "output": 0.69 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "gpt-5.6-sol-project": {
+          "name": "GPT-5.6 Sol (Incubator)",
+          "cost": { "input": 6.325, "output": 37.95 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gpt-5.6-terra-project": {
+          "name": "GPT-5.6 Terra (Incubator)",
+          "cost": { "input": 2.53, "output": 15.18 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gpt-5.6-luna-project": {
+          "name": "GPT-5.6 Luna (Incubator)",
+          "cost": { "input": 0.253, "output": 1.518 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        },
+        "gemini-3.7-flash-project": {
+          "name": "Gemini 3.7 Flash (Incubator)",
+          "cost": { "input": 0.9487, "output": 4.744 },
+          "attachment": true,
+          "modalities": { "input": ["text", "image", "video", "audio", "pdf"], "output": ["text"] }
+        },
         "gpt-4o-project": {},
-        "gemini-2.5-pro-project": {},
-        "o3-project": {}
+        "gemini-2.5-pro-project": {}
       }
     }
   },
