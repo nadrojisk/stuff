@@ -3,6 +3,13 @@ if status is-interactive
     set -g fish_greeting
     alias grep="rg"
     alias vim="nvim"
+    if command -q xsetroot
+        xsetroot -cursor_name left_ptr 2>/dev/null
+    end
+    if command -q xrdb
+        echo "Xcursor.size: 14" | xrdb -merge 2>/dev/null
+        echo "Xcursor.theme: Adwaita" | xrdb -merge 2>/dev/null
+    end
 end
 
 # Added by jcode installer
@@ -20,12 +27,16 @@ fish_add_path --path "$HOME/.opencode/bin"
 
 # ── PROMPT ────────────────────────────────────────────────────────────────────
 if command -q oh-my-posh
-    oh-my-posh init fish --config '/mnt/d/OneDrive - PNNL/Documents/custom.omp.json' | source
+    oh-my-posh init fish --config "$HOME/Documents/Repos/GitLab/stuff/dotconfig/oh-my-posh/custom.omp.json" | source
 end
 
 # ── EDITOR / BROWSER ──────────────────────────────────────────────────────────
 set -gx EDITOR vim
 set -gx BROWSER wslview
+set -gx XCURSOR_SIZE 14
+set -gx XCURSOR_THEME Adwaita
+set -gx QT_QPA_PLATFORMTHEME qt6ct
+set -gx QT_STYLE_OVERRIDE fusion
 
 # ── PYENV ─────────────────────────────────────────────────────────────────────
 set -gx PYENV_ROOT "$HOME/.pyenv"
