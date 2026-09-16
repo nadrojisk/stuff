@@ -4,7 +4,7 @@ set -g _OP_CACHE_TTL 86400
 function op-unlock
     echo "Unlocking 1Password secrets..." >&2
 
-    set -l incubator  (op.exe read "op://PNNL/Incubator CSOC Devwork/credential" 2>/dev/null)
+    set -l incubator  (op.exe read "op://PNNL/AI Incubator - Personal/credential" 2>/dev/null)
     set -l jira       (op.exe read "op://PNNL/Jira PAT/credential" 2>/dev/null)
     set -l confluence (op.exe read "op://PNNL/Confluence PAT/credential" 2>/dev/null)
     set -l az_user    (op.exe read "op://PNNL/Asgard Azure Service Principal/username" 2>/dev/null)
