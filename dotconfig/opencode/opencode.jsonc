@@ -19,7 +19,7 @@
     }
   },
   "mcp":{
-           "kusto": {
+    "kusto": {
         "type": "remote",
         "url": "https://bifrost.pnnl.gov/kusto-mcp-dev/mcp",
         "oauth": {
@@ -45,7 +45,19 @@
     },
     "thehive": {
       "type": "remote",
-      "url": "https://bifrost.pnnl.gov/thehive-dev-oauth/mcp",
+      "url": "https://bifrost.pnnl.gov/thehive-oauth/mcp",
+      "oauth": {
+        "clientId": "a219bc81-ea44-4b28-b951-a7dddc725a67",
+        "scope": "api://a219bc81-ea44-4b28-b951-a7dddc725a67/access-as-user offline_access openid profile",
+        "redirectUri": "http://localhost:6274/oauth/callback"
+      },
+      "headers": {
+          "X-THEHIVE-AUTHORIZATION-HEADER": "Bearer {env:THEHIVE_BEARER_TOKEN}"
+      }
+    },
+    "thehivedev": {
+      "type": "remote",
+      "url": "https://bifrost.pnnl.gov/thehivedev-oauth/mcp",
       "oauth": {
         "clientId": "a219bc81-ea44-4b28-b951-a7dddc725a67",
         "scope": "api://a219bc81-ea44-4b28-b951-a7dddc725a67/access-as-user offline_access openid profile",
