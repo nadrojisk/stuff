@@ -58,7 +58,7 @@ set -gx WSLENV (string join ":" $_wslenv_base $_wslenv_extras)
 # Secrets resolved into /tmp/op_secrets_<uid> on first use (see functions/).
 # TTL is a sliding window — extended on each call to claude/opencode/az-login.
 set -g _OP_SECRETS_FILE /tmp/op_secrets_(id -u)
-set -g _OP_CACHE_TTL 3600
+set -g _OP_CACHE_TTL 86400
 
 # ── ZOXIDE ────────────────────────────────────────────────────────────────────
 if command -q zoxide

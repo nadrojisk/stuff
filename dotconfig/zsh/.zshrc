@@ -71,7 +71,7 @@ unset _wslenv_extras _wslenv_base
 
 # 1Password credential cache — shared tmpfs file, one unlock per WSL session
 _OP_SECRETS_FILE="/tmp/op_secrets_$(id -u)"
-_OP_CACHE_TTL=3600
+_OP_CACHE_TTL=86400
 
 function op-unlock() {
     echo "Unlocking 1Password secrets..." >&2
