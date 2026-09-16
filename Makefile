@@ -21,7 +21,10 @@ LINKS := \
 	$(HOME)/.ssh/allowed_signers|$(DOT)/ssh/allowed_signers \
 	$(HOME)/.config/opencode|$(DOT)/opencode \
 	$(HOME)/.config/glab-cli/aliases.yml|$(DOT)/glab-cli/aliases.yml \
-	$(HOME)/.config/timewarrior/timewarrior.cfg|$(DOT)/timewarrior/timewarrior.cfg
+	$(HOME)/.config/timewarrior/timewarrior.cfg|$(DOT)/timewarrior/timewarrior.cfg \
+	$(HOME)/.config/wireshark/preferences|$(DOT)/wireshark/preferences \
+	$(HOME)/.config/wireshark/dfilter_buttons|$(DOT)/wireshark/dfilter_buttons \
+	$(HOME)/.config/wireshark/decode_as_entries|$(DOT)/wireshark/decode_as_entries
 
 .PHONY: install check dirs help
 
