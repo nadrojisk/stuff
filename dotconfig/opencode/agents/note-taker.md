@@ -49,6 +49,8 @@ Several files serve as Maps of Content (MOC) for their section. When you create 
 
 When adding to an index file, insert the `[[Note Name]]` under the most relevant heading. Do not rewrite or reformat the index — append or insert only.
 
+**Parent index walk-up rule:** After writing a note, walk up the directory tree and check each parent folder for an index/MOC file (named after the folder, e.g. `Linux.md` in `Tips and Tricks/Linux/`, `Tips and Tricks.md` in `Tips and Tricks/`). If the index exists, add a `[[wiki-link]]` to the new note if it isn't already there. If no index exists for that folder but sibling notes exist, create one following the existing MOC style (plain heading, `- [[wiki-link]]` bullets, no frontmatter). Do this for every folder level up to but not including the vault root.
+
 ## File format
 
 Every new note must use this frontmatter:
