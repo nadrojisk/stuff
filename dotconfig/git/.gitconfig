@@ -58,3 +58,5 @@
 	defaultBranch = main
 [gpg "ssh"]
 	allowedSignersFile = /home/sosn071/.ssh/allowed_signers
+[push]
+	autoSetupRemote = true
