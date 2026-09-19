@@ -24,7 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      # scripts/ only: the dotconfig rc files are interactive (and zsh, which shellcheck can't parse).
       - uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          scandir: ./scripts
 
   ruff:
     name: Python (ruff)
