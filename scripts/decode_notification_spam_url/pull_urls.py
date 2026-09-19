@@ -1,5 +1,4 @@
 import csv
-import urllib.parse
 from urllib.parse import urlparse, parse_qs
 from collections import defaultdict
 import base64 
@@ -18,7 +17,7 @@ def parse_b64_url(url):
           try:
                 
               b64_blob = parse_qs(urlparse(url).query).get('url',None)
-              if b64_blob == None:
+              if b64_blob is None:
                 return ''
               b64_blob = b64_blob[0]
               b64_blob, failed = divisibleBy(b64_blob)
@@ -27,7 +26,7 @@ def parse_b64_url(url):
               decoded = base64.b64decode(b64_blob + '=' * (-len(b64_blob) % 4)).decode("utf-8")
               if "psh" in decoded:
                 print(url)
-          except binascii.Error as e:
+          except binascii.Error:
               return ''
           return decoded
  
