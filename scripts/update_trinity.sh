@@ -34,7 +34,7 @@ echo "[+] Installing capstone + bindings" >&2
 pushd /tmp
 git clone --quiet https://github.com/capstone-engine/capstone.git
 cd capstone
-./make.sh default -j${NB_CPU}
+./make.sh default -j"${NB_CPU}"
 sudo ./make.sh install
 cd ./bindings/python
 sudo python3 setup.py install

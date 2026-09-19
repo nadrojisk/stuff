@@ -1,0 +1,11 @@
+# Wireshark exports a browser cookie file next to the preferences; never commit it.
+dotconfig/wireshark/cookie
+**/cookie
+
+# Local secrets / machine-specific overrides
+.env
+*.local
+
+# Python bytecode
+__pycache__/
+*.pyc
