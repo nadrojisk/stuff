@@ -44,6 +44,26 @@ ln -s ~/path/to/repo/dotconfig/tmux ~/.config/tmux
 New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Code\User\settings.json" -Target ".\dotconfig\vscode\settings.json"
 ```
 
+### Server profile
+
+`make install-server` links the subset a headless server needs, and nothing tied to the work laptop (no `.gitconfig` with the work
+email and signing key, no rc files with a hardcoded home, WSL settings or the internal Foundry URL, no ssh/glab/vscode/wireshark):
+
+| Linked | From |
+|---|---|
+| `~/.vimrc`, `~/.tmux.conf`, `~/.config/nvim` | `vim/`, `tmux/`, `nvim/` |
+| `~/.config/git/config` (no identity, no signing key), `~/.config/git/aliases`, `~/.config/git/ignore` | `git/server.gitconfig`, `git/aliases.gitconfig`, `git/xdg/ignore` |
+| `~/.config/fish/conf.d/10-server.fish` | `fish/conf.d/10-server.fish` |
+| `~/.config/oh-my-posh/custom.omp.json` | `oh-my-posh/` |
+
+`make check-server` shows their status and `make list-server` prints the repo files involved. The aliases live in one file
+(`git/aliases.gitconfig`) that both the laptop `.gitconfig` and the server config include, so run `make install` once on the laptop
+after pulling this (it adds the `~/.config/git/aliases` link; until then the laptop's aliases are missing).
+
+This is what the [homelab](https://github.com/nadrojisk/homelab) repo's Ansible `dotfiles` role runs on a new host, pinned to a
+commit of this repo. To change what a server gets, edit `SERVER_LINKS` in the `Makefile`; CI fails if a work-specific string
+(`sosn071`, `pnnl`, `WSLENV`, `wslview`, `FOUNDRY`, `1PASSWORD`, `OneDrive`) appears in anything the profile links.
+
 ## Scripts (`scripts/`)
 
 Collection of utility scripts for various tasks. Each script directory contains its own README with detailed usage instructions.

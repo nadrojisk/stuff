@@ -51,3 +51,28 @@ jobs:
           recurse: true
           severity: '"Error"'
           enableExit: true
+
+  server-profile:
+    name: Server profile installs cleanly and stays free of work-specific content
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq fish
+      - name: Install into an empty HOME, twice (the second run must change nothing)
+        run: |
+          export HOME="$(mktemp -d)"
+          make install-server
+          make install-server | grep -v '^  skip ' && { echo "second run was not a no-op"; exit 1; } || true
+          make check-server | tail -n +3 | grep -v ' OK$' && { echo "a link is not OK"; exit 1; } || true
+      - name: fish config parses
+        run: fish --no-execute dotconfig/fish/conf.d/10-server.fish
+      - name: No work-specific content in anything the server profile links
+        run: |
+          if make -s list-server | xargs grep -rIEn 'sosn071|pnnl|PNNL|WSLENV|wslview|FOUNDRY|1PASSWORD|OneDrive|/mnt/[a-z]/'; then
+            echo "the server profile links a file with work-specific content"; exit 1
+          fi
+      - name: Server git config has no identity or signing key
+        run: |
+          if grep -nE '^\s*(name|email|signingkey|gpgsign)\s*=' dotconfig/git/server.gitconfig dotconfig/git/aliases.gitconfig; then
+            echo "server git config must not set an identity or signing key"; exit 1
+          fi

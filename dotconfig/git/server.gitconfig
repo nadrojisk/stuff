@@ -1,0 +1,16 @@
+# Git configuration for servers (linked to ~/.config/git/config by `make install-server`).
+# Deliberately has NO identity, signing key or work-specific paths: the laptop .gitconfig carries those. If you commit on a server,
+# set an identity there with `git config --global user.name ...` / `user.email ...` (that writes ~/.gitconfig, which is read after
+# this file and wins).
+[include]
+    path = ~/.config/git/aliases
+[core]
+    whitespace = -trailing-space
+[color]
+    ui = auto
+[pull]
+    rebase = false
+[init]
+    defaultBranch = main
+[push]
+    autoSetupRemote = true
