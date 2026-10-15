@@ -2,7 +2,6 @@
 # The portable subset of ../config.fish: aliases, zoxide and the prompt, without the WSL, Foundry, 1Password and work-path parts.
 if status is-interactive
     set -g fish_greeting
-    command -q rg; and alias grep=rg
     command -q nvim; and alias vim=nvim
     alias ip="ip --color=auto"
     command -q zoxide; and zoxide init fish | source
