@@ -38,8 +38,7 @@ SERVER_LINKS := \
 	$(HOME)/.config/git/ignore|$(DOT)/git/xdg/ignore \
 	$(HOME)/.config/git/aliases|$(DOT)/git/aliases.gitconfig \
 	$(HOME)/.config/git/config|$(DOT)/git/server.gitconfig \
-	$(HOME)/.config/fish/conf.d/10-server.fish|$(DOT)/fish/conf.d/10-server.fish \
-	$(HOME)/.config/oh-my-posh/custom.omp.json|$(DOT)/oh-my-posh/custom.omp.json
+	$(HOME)/.config/fish/conf.d/10-server.fish|$(DOT)/fish/conf.d/10-server.fish
 
 # $(call link_all,<LIST>) / $(call check_all,<LIST>): run _link / _check for every <dst>|<src> pair in LIST.
 define link_all

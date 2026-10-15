@@ -5,10 +5,9 @@ if status is-interactive
     command -q nvim; and alias vim=nvim
     alias ip="ip --color=auto"
     command -q zoxide; and zoxide init fish | source
-    # oh-my-posh is not in Debian's repositories; install it by hand if you want the prompt (the theme is linked either way).
-    if command -q oh-my-posh; and test -r $HOME/.config/oh-my-posh/custom.omp.json
-        oh-my-posh init fish --config $HOME/.config/oh-my-posh/custom.omp.json | source
-    end
+    # The prompt. Installed by the homelab Ansible playbook (the apt package on Debian, the release binary on Ubuntu); its Nerd Font
+    # symbols preset is generated on the host, not tracked here.
+    command -q starship; and starship init fish | source
 end
 
 set -gx EDITOR vim
