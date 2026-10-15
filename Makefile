@@ -8,6 +8,7 @@ LINKS := \
 	$(HOME)/.gitconfig|$(DOT)/git/.gitconfig \
 	$(HOME)/.gitconfig-wsl|$(DOT)/git/.gitconfig-wsl \
 	$(HOME)/.config/git/ignore|$(DOT)/git/xdg/ignore \
+	$(HOME)/.config/git/aliases|$(DOT)/git/aliases.gitconfig \
 	$(HOME)/.bashrc|$(DOT)/bash/.bashrc \
 	$(HOME)/.config/fish/config.fish|$(DOT)/fish/config.fish \
 	$(HOME)/.config/fish/functions|$(DOT)/fish/functions \
@@ -26,7 +27,36 @@ LINKS := \
 	$(HOME)/.config/wireshark/dfilter_buttons|$(DOT)/wireshark/dfilter_buttons \
 	$(HOME)/.config/wireshark/decode_as_entries|$(DOT)/wireshark/decode_as_entries
 
-.PHONY: install check dirs help
+# ── server profile ────────────────────────────────────────────────────────────
+# What a headless server needs, and nothing tied to the work laptop: no .gitconfig (work email, signing key, a /home/sosn071
+# path), no bash/zsh/fish rc files (hardcoded home, WSL, internal Foundry URL, 1Password helpers), no ssh/glab/vscode/wireshark.
+# Used by the homelab repo's Ansible `dotfiles` role (`make install-server`), so the file list lives here only.
+SERVER_LINKS := \
+	$(HOME)/.vimrc|$(DOT)/vim/.vimrc \
+	$(HOME)/.tmux.conf|$(DOT)/tmux/.tmux.conf \
+	$(HOME)/.config/nvim|$(DOT)/nvim \
+	$(HOME)/.config/git/ignore|$(DOT)/git/xdg/ignore \
+	$(HOME)/.config/git/aliases|$(DOT)/git/aliases.gitconfig \
+	$(HOME)/.config/git/config|$(DOT)/git/server.gitconfig \
+	$(HOME)/.config/fish/conf.d/10-server.fish|$(DOT)/fish/conf.d/10-server.fish \
+	$(HOME)/.config/oh-my-posh/custom.omp.json|$(DOT)/oh-my-posh/custom.omp.json
+
+# $(call link_all,<LIST>) / $(call check_all,<LIST>): run _link / _check for every <dst>|<src> pair in LIST.
+define link_all
+	@$(foreach pair,$(1), \
+		$(eval dst := $(word 1,$(subst |, ,$(pair)))) \
+		$(eval src := $(word 2,$(subst |, ,$(pair)))) \
+		$(MAKE) --no-print-directory _link DST=$(dst) SRC=$(src) ;)
+endef
+
+define check_all
+	@$(foreach pair,$(1), \
+		$(eval dst := $(word 1,$(subst |, ,$(pair)))) \
+		$(eval src := $(word 2,$(subst |, ,$(pair)))) \
+		$(MAKE) --no-print-directory _check DST=$(dst) SRC=$(src) ;)
+endef
+
+.PHONY: install check dirs help install-server check-server list-server
 
 # ── dirs ──────────────────────────────────────────────────────────────────────
 # Create XDG state/cache dirs that tools expect to exist but won't create themselves.
@@ -43,10 +73,7 @@ dirs: ## Create required XDG state and cache directories
 
 # ── install ───────────────────────────────────────────────────────────────────
 install: dirs ## Symlink all dotfiles into place
-	@$(foreach pair,$(LINKS), \
-		$(eval dst := $(word 1,$(subst |, ,$(pair)))) \
-		$(eval src := $(word 2,$(subst |, ,$(pair)))) \
-		$(MAKE) --no-print-directory _link DST=$(dst) SRC=$(src) ;)
+	$(call link_all,$(LINKS))
 	@echo ""
 	@echo "Done. Reload your shell:"
 	@echo "  fish: source ~/.config/fish/config.fish"
@@ -65,10 +92,19 @@ install: dirs ## Symlink all dotfiles into place
 check: ## Show status of all managed symlinks
 	@printf "%-55s %s\n" "LINK" "STATUS"
 	@printf "%-55s %s\n" "----" "------"
-	@$(foreach pair,$(LINKS), \
-		$(eval dst := $(word 1,$(subst |, ,$(pair)))) \
-		$(eval src := $(word 2,$(subst |, ,$(pair)))) \
-		$(MAKE) --no-print-directory _check DST=$(dst) SRC=$(src) ;)
+	$(call check_all,$(LINKS))
+
+# ── server profile targets ────────────────────────────────────────────────────
+install-server: ## Symlink the server-safe subset (no work identity, no WSL) for a headless machine
+	$(call link_all,$(SERVER_LINKS))
+
+check-server: ## Show status of the server profile's symlinks
+	@printf "%-55s %s\n" "LINK" "STATUS"
+	@printf "%-55s %s\n" "----" "------"
+	$(call check_all,$(SERVER_LINKS))
+
+list-server: ## Print the repo files the server profile links (CI checks them for work-specific content)
+	@$(foreach pair,$(SERVER_LINKS),echo $(word 2,$(subst |, ,$(pair)));)
 
 # ── internal: create one symlink ──────────────────────────────────────────────
 .PHONY: _link
