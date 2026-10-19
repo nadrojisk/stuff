@@ -54,7 +54,6 @@ identity and 1Password signing, no rc files with WSL or 1Password aliases, no ss
 | `~/.vimrc`, `~/.tmux.conf`, `~/.config/nvim` | `vim/`, `tmux/`, `nvim/` |
 | `~/.config/git/config` (no identity, no signing key), `~/.config/git/aliases`, `~/.config/git/ignore` | `git/server.gitconfig`, `git/aliases.gitconfig`, `git/xdg/ignore` |
 | `~/.config/fish/conf.d/10-server.fish` | `fish/conf.d/10-server.fish` |
-| `~/.config/oh-my-posh/custom.omp.json` | `oh-my-posh/` |
 
 `make check-server` shows their status and `make list-server` prints the repo files involved. The aliases live in one file
 (`git/aliases.gitconfig`) that both the desktop `.gitconfig` and the server config include.

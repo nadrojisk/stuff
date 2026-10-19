@@ -26,8 +26,8 @@ end
 fish_add_path --path "$HOME/.opencode/bin"
 
 # ── PROMPT ────────────────────────────────────────────────────────────────────
-if command -q oh-my-posh
-    oh-my-posh init fish --config "$HOME/Documents/stuff/dotconfig/oh-my-posh/custom.omp.json" | source
+if command -q starship
+    starship init fish | source
 end
 
 # ── EDITOR / BROWSER ──────────────────────────────────────────────────────────

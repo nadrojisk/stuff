@@ -122,7 +122,7 @@ alias ssh='ssh.exe'
 alias ssh-add='ssh-add.exe'
 alias op='op.exe'
 
-command -v oh-my-posh &>/dev/null && eval "$(oh-my-posh init bash --config "$HOME/Documents/stuff/dotconfig/oh-my-posh/custom.omp.json")"
+command -v starship &>/dev/null && eval "$(starship init bash)"
 
 export PATH=$HOME/Scripts/DidierStevensSuite/:$PATH
 export PATH="$PATH:/opt/nvim/"

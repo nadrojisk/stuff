@@ -31,8 +31,8 @@ source $ZSH/oh-my-zsh.sh
 [[ -s "${ZSH_COMPDUMP}" && ! -s "${ZSH_COMPDUMP}.zwc" ]] && zcompile "${ZSH_COMPDUMP}"
 
 # ── PROMPT ────────────────────────────────────────────────────────────────────
-if command -v oh-my-posh &>/dev/null; then
-    eval "$(oh-my-posh init zsh --config "$HOME/Documents/stuff/dotconfig/oh-my-posh/custom.omp.json")"
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
 fi
 
 # ── EDITOR / BROWSER ──────────────────────────────────────────────────────────
