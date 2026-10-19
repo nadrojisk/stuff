@@ -5,8 +5,8 @@ if status is-interactive
     command -q nvim; and alias vim=nvim
     alias ip="ip --color=auto"
     command -q zoxide; and zoxide init fish | source
-    # The prompt. Installed by the homelab Ansible playbook (the apt package on Debian, the release binary on Ubuntu); its Nerd Font
-    # symbols preset is generated on the host, not tracked here.
+    # The prompt. Installed by the homelab Ansible playbook (the apt package on Debian, the release binary on Ubuntu); its config is
+    # ../../starship/starship.toml.
     command -q starship; and starship init fish | source
 end
 

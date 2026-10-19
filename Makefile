@@ -17,6 +17,7 @@ LINKS := \
 	$(HOME)/.vimrc|$(DOT)/vim/.vimrc \
 	$(HOME)/.config/nvim|$(DOT)/nvim \
 	$(HOME)/.tmux.conf|$(DOT)/tmux/.tmux.conf \
+	$(HOME)/.config/starship.toml|$(DOT)/starship/starship.toml \
 	$(HOME)/.ssh/config|$(DOT)/ssh/config \
 	$(HOME)/.ssh/allowed_signers|$(DOT)/ssh/allowed_signers \
 	$(HOME)/.config/timewarrior/timewarrior.cfg|$(DOT)/timewarrior/timewarrior.cfg \
@@ -35,7 +36,8 @@ SERVER_LINKS := \
 	$(HOME)/.config/git/ignore|$(DOT)/git/xdg/ignore \
 	$(HOME)/.config/git/aliases|$(DOT)/git/aliases.gitconfig \
 	$(HOME)/.config/git/config|$(DOT)/git/server.gitconfig \
-	$(HOME)/.config/fish/conf.d/10-server.fish|$(DOT)/fish/conf.d/10-server.fish
+	$(HOME)/.config/fish/conf.d/10-server.fish|$(DOT)/fish/conf.d/10-server.fish \
+	$(HOME)/.config/starship.toml|$(DOT)/starship/starship.toml
 
 # $(call link_all,<LIST>) / $(call check_all,<LIST>): run _link / _check for every <dst>|<src> pair in LIST.
 define link_all
