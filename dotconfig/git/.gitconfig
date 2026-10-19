@@ -34,6 +34,7 @@
 [init]
 	defaultBranch = main
 [gpg "ssh"]
-	allowedSignersFile = ~/.ssh/allowed_signers
+	# The repo file, not the ~/.ssh symlink to it: op-ssh-sign-wsl.exe runs on Windows and cannot follow WSL symlinks
+	allowedSignersFile = ~/Documents/stuff/dotconfig/ssh/allowed_signers
 [push]
 	autoSetupRemote = true
