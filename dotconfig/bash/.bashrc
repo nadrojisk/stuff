@@ -120,8 +120,12 @@ fi
 
 alias ssh='ssh.exe'
 alias ssh-add='ssh-add.exe'
+alias op='op.exe'
 
 command -v oh-my-posh &>/dev/null && eval "$(oh-my-posh init bash --config "$HOME/Documents/stuff/dotconfig/oh-my-posh/custom.omp.json")"
 
 export PATH=$HOME/Scripts/DidierStevensSuite/:$PATH
 export PATH="$PATH:/opt/nvim/"
+
+# Machine-specific settings (nvm, tool install paths, ...) that don't belong in the repo
+[ -f ~/.bashrc.local ] && . ~/.bashrc.local
