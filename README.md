@@ -46,8 +46,8 @@ New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Code\User\settings.json" -Ta
 
 ### Server profile
 
-`make install-server` links the subset a headless server needs, and nothing tied to the work laptop (no `.gitconfig` with the work
-email and signing key, no rc files with a hardcoded home, WSL settings or the internal Foundry URL, no ssh/glab/vscode/wireshark):
+`make install-server` links the subset a headless server needs, and nothing tied to the WSL desktop (no `.gitconfig` with the
+identity and 1Password signing, no rc files with WSL or 1Password aliases, no ssh/vscode/wireshark):
 
 | Linked | From |
 |---|---|
@@ -57,12 +57,11 @@ email and signing key, no rc files with a hardcoded home, WSL settings or the in
 | `~/.config/oh-my-posh/custom.omp.json` | `oh-my-posh/` |
 
 `make check-server` shows their status and `make list-server` prints the repo files involved. The aliases live in one file
-(`git/aliases.gitconfig`) that both the laptop `.gitconfig` and the server config include, so run `make install` once on the laptop
-after pulling this (it adds the `~/.config/git/aliases` link; until then the laptop's aliases are missing).
+(`git/aliases.gitconfig`) that both the desktop `.gitconfig` and the server config include.
 
 This is what the [homelab](https://github.com/nadrojisk/homelab) repo's Ansible `dotfiles` role runs on a new host, pinned to a
-commit of this repo. To change what a server gets, edit `SERVER_LINKS` in the `Makefile`; CI fails if a work-specific string
-(`sosn071`, `pnnl`, `WSLENV`, `wslview`, `FOUNDRY`, `1PASSWORD`, `OneDrive`) appears in anything the profile links.
+commit of this repo. To change what a server gets, edit `SERVER_LINKS` in the `Makefile`; CI fails if a WSL-specific string
+(`WSLENV`, `wslview`, a `.exe`, a `/mnt/<drive>/` path) appears in anything the profile links.
 
 ## Scripts (`scripts/`)
 
@@ -91,13 +90,6 @@ Collection of utility scripts for various tasks. Each script directory contains 
 |--------|---------|----------|
 | `pull_chrome_history/` | Extract Chrome browser history | PowerShell |
 | `pull_enabled_notifications/` | Get Chrome notification permissions | PowerShell |
-
-#### Identity & Access Management
-
-| Script | Purpose | Language |
-|--------|---------|----------|
-| `get_entra_user_helper/` | Query Microsoft Entra user info | PowerShell |
-| `the_hive_search_tasks/` | Search TheHive cases by task | PowerShell |
 
 ### Usage
 
@@ -157,7 +149,6 @@ Several scripts are designed for security operations and forensics:
 
 - **URL Analysis**: Deobfuscate and extract URLs from suspicious emails/HTML
 - **Browser Forensics**: Extract Chrome history and notification data
-- **Incident Response**: TheHive case management utilities
 - **Network Analysis**: Wireshark configurations for packet analysis
 
 ## Related Resources

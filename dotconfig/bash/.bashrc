@@ -1,4 +1,4 @@
-export PATH=$PATH:/home/sosn071/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -121,7 +121,7 @@ fi
 alias ssh='ssh.exe'
 alias ssh-add='ssh-add.exe'
 
-eval "$(oh-my-posh init bash --config /mnt/d/OneDrive\ -\ PNNL/Documents/custom.omp.json)"
+command -v oh-my-posh &>/dev/null && eval "$(oh-my-posh init bash --config "$HOME/Documents/stuff/dotconfig/oh-my-posh/custom.omp.json")"
 
 export PATH=$HOME/Scripts/DidierStevensSuite/:$PATH
 export PATH="$PATH:/opt/nvim/"

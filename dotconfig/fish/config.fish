@@ -13,8 +13,8 @@ if status is-interactive
 end
 
 # Added by jcode installer
-if not contains "/home/sosn071/.local/bin" $PATH
-    set -gx PATH "/home/sosn071/.local/bin" $PATH
+if not contains "$HOME/.local/bin" $PATH
+    set -gx PATH "$HOME/.local/bin" $PATH
 end
 
 # ── PATH ──────────────────────────────────────────────────────────────────────
@@ -27,7 +27,7 @@ fish_add_path --path "$HOME/.opencode/bin"
 
 # ── PROMPT ────────────────────────────────────────────────────────────────────
 if command -q oh-my-posh
-    oh-my-posh init fish --config "$HOME/Documents/Repos/GitLab/stuff/dotconfig/oh-my-posh/custom.omp.json" | source
+    oh-my-posh init fish --config "$HOME/Documents/stuff/dotconfig/oh-my-posh/custom.omp.json" | source
 end
 
 # ── EDITOR / BROWSER ──────────────────────────────────────────────────────────
@@ -45,31 +45,6 @@ if command -q pyenv
     pyenv init - fish | source
     pyenv virtualenv-init - fish | source
 end
-
-# ── ANTHROPIC / CLAUDE ────────────────────────────────────────────────────────
-set -gx CLAUDE_CODE_USE_FOUNDRY 1
-set -gx CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS 1
-set -gx ANTHROPIC_FOUNDRY_BASE_URL "https://ai-incubator-api.pnnl.gov"
-set -gx ANTHROPIC_DEFAULT_SONNET_MODEL "claude-sonnet-5-project"
-set -gx ANTHROPIC_DEFAULT_HAIKU_MODEL "claude-haiku-4-5-20251001-v1-project"
-set -gx ANTHROPIC_DEFAULT_OPUS_MODEL "claude-opus-4-8-project"
-
-# Idempotent WSLENV — rebuild each time to avoid duplicates on fishsource
-set -l _wslenv_extras \
-    CLAUDE_CODE_USE_FOUNDRY \
-    CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS \
-    ANTHROPIC_FOUNDRY_BASE_URL \
-    ANTHROPIC_DEFAULT_SONNET_MODEL \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL \
-    ANTHROPIC_DEFAULT_OPUS_MODEL
-set -l _wslenv_base (string split ":" "$WSLENV" | string match -rv '^(CLAUDE_CODE_USE_FOUNDRY|CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS|ANTHROPIC_.*)$')
-set -gx WSLENV (string join ":" $_wslenv_base $_wslenv_extras)
-
-# ── 1PASSWORD ─────────────────────────────────────────────────────────────────
-# Secrets resolved into /tmp/op_secrets_<uid> on first use (see functions/).
-# TTL is a sliding window — extended on each call to claude/opencode/az-login.
-set -g _OP_SECRETS_FILE /tmp/op_secrets_(id -u)
-set -g _OP_CACHE_TTL 86400
 
 # ── ZOXIDE ────────────────────────────────────────────────────────────────────
 if command -q zoxide

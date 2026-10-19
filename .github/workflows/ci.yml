@@ -53,7 +53,7 @@ jobs:
           enableExit: true
 
   server-profile:
-    name: Server profile installs cleanly and stays free of work-specific content
+    name: Server profile installs cleanly and stays free of WSL-specific content
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -66,10 +66,10 @@ jobs:
           make check-server | tail -n +3 | grep -v ' OK$' && { echo "a link is not OK"; exit 1; } || true
       - name: fish config parses
         run: fish --no-execute dotconfig/fish/conf.d/10-server.fish
-      - name: No work-specific content in anything the server profile links
+      - name: No WSL-specific content in anything the server profile links
         run: |
-          if make -s list-server | xargs grep -rIEn 'sosn071|pnnl|PNNL|WSLENV|wslview|FOUNDRY|1PASSWORD|OneDrive|/mnt/[a-z]/'; then
-            echo "the server profile links a file with work-specific content"; exit 1
+          if make -s list-server | xargs grep -rIEn 'WSLENV|wslview|[a-z]\.exe\b|/mnt/[a-z]/'; then
+            echo "the server profile links a file with WSL-specific content"; exit 1
           fi
       - name: Server git config has no identity or signing key
         run: |

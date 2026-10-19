@@ -1,5 +1,5 @@
 # Server fish configuration (linked to ~/.config/fish/conf.d/ by `make install-server`).
-# The portable subset of ../config.fish: aliases, zoxide and the prompt, without the WSL, Foundry, 1Password and work-path parts.
+# The portable subset of ../config.fish: aliases, zoxide and the prompt, without the WSL and 1Password parts.
 if status is-interactive
     set -g fish_greeting
     command -q nvim; and alias vim=nvim
