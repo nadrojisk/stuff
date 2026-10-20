@@ -11,25 +11,23 @@ LINKS := \
 	$(HOME)/.config/git/aliases|$(DOT)/git/aliases.gitconfig \
 	$(HOME)/.bashrc|$(DOT)/bash/.bashrc \
 	$(HOME)/.config/fish/config.fish|$(DOT)/fish/config.fish \
-	$(HOME)/.config/fish/functions|$(DOT)/fish/functions \
 	$(HOME)/.zshrc|$(DOT)/zsh/.zshrc \
 	$(HOME)/.zprofile|$(DOT)/zsh/.zprofile \
 	$(HOME)/.zshenv|$(DOT)/zsh/.zshenv \
 	$(HOME)/.vimrc|$(DOT)/vim/.vimrc \
 	$(HOME)/.config/nvim|$(DOT)/nvim \
 	$(HOME)/.tmux.conf|$(DOT)/tmux/.tmux.conf \
+	$(HOME)/.config/starship.toml|$(DOT)/starship/starship.toml \
 	$(HOME)/.ssh/config|$(DOT)/ssh/config \
 	$(HOME)/.ssh/allowed_signers|$(DOT)/ssh/allowed_signers \
-	$(HOME)/.config/opencode|$(DOT)/opencode \
-	$(HOME)/.config/glab-cli/aliases.yml|$(DOT)/glab-cli/aliases.yml \
 	$(HOME)/.config/timewarrior/timewarrior.cfg|$(DOT)/timewarrior/timewarrior.cfg \
 	$(HOME)/.config/wireshark/preferences|$(DOT)/wireshark/preferences \
 	$(HOME)/.config/wireshark/dfilter_buttons|$(DOT)/wireshark/dfilter_buttons \
 	$(HOME)/.config/wireshark/decode_as_entries|$(DOT)/wireshark/decode_as_entries
 
 # ── server profile ────────────────────────────────────────────────────────────
-# What a headless server needs, and nothing tied to the work laptop: no .gitconfig (work email, signing key, a /home/sosn071
-# path), no bash/zsh/fish rc files (hardcoded home, WSL, internal Foundry URL, 1Password helpers), no ssh/glab/vscode/wireshark.
+# What a headless server needs, and nothing tied to the WSL desktop: no .gitconfig (identity, 1Password signing via Windows),
+# no bash/zsh/fish rc files (WSL and 1Password aliases), no ssh/vscode/wireshark.
 # Used by the homelab repo's Ansible `dotfiles` role (`make install-server`), so the file list lives here only.
 SERVER_LINKS := \
 	$(HOME)/.vimrc|$(DOT)/vim/.vimrc \
@@ -38,7 +36,8 @@ SERVER_LINKS := \
 	$(HOME)/.config/git/ignore|$(DOT)/git/xdg/ignore \
 	$(HOME)/.config/git/aliases|$(DOT)/git/aliases.gitconfig \
 	$(HOME)/.config/git/config|$(DOT)/git/server.gitconfig \
-	$(HOME)/.config/fish/conf.d/10-server.fish|$(DOT)/fish/conf.d/10-server.fish
+	$(HOME)/.config/fish/conf.d/10-server.fish|$(DOT)/fish/conf.d/10-server.fish \
+	$(HOME)/.config/starship.toml|$(DOT)/starship/starship.toml
 
 # $(call link_all,<LIST>) / $(call check_all,<LIST>): run _link / _check for every <dst>|<src> pair in LIST.
 define link_all
@@ -78,14 +77,6 @@ install: dirs ## Symlink all dotfiles into place
 	@echo "  fish: source ~/.config/fish/config.fish"
 	@echo "  zsh:  source ~/.zshrc"
 	@echo "  bash: source ~/.bashrc"
-	@echo ""
-	@echo "Note: glab-cli/config.yml is NOT symlinked — populate tokens with:"
-	@echo "  glab auth login --hostname devops.pnnl.gov"
-	@echo "  glab auth login --hostname infra-gitlab.pnl.gov"
-	@echo ""
-	@echo "Note: oh-my-posh theme (dotconfig/oh-my-posh/custom.omp.json) is backed"
-	@echo "  up here but lives at '/mnt/d/OneDrive - PNNL/Documents/custom.omp.json'"
-	@echo "  on the Windows side. Copy it there on a fresh machine."
 
 # ── check ─────────────────────────────────────────────────────────────────────
 check: ## Show status of all managed symlinks

@@ -31,7 +31,7 @@
 
 # Directory to start in when opening File Open dialog.
 # A path to a directory
-#gui.fileopen.dir: /home/sosn071
+#gui.fileopen.dir: /home/nadrojisk
 
 # The preview timeout in the File Open dialog
 # A decimal number
@@ -588,7 +588,7 @@ gui.qt.font_name: Consolas,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 # Remote SSH server username
 # A string
-#extcap.ciscodump.remoteusername: sosn071
+#extcap.ciscodump.remoteusername: nadrojisk
 
 # Remote SSH server password
 # Password (never stored on disk)

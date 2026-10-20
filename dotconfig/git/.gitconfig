@@ -16,8 +16,8 @@
 	longpaths = true
 [user]
     name = Jordan Sosnowski
-    email = jordan.sosnowski@pnnl.gov
-    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7453USdRN6KA1yvlPFXKY0xWSM2D8o/lJsb2uMXB9+
+    email = nadrojisk@pm.me
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0Nw3yTljK1dyl2NE3QsvMGEtmAI0Mc634OucVzQYRR
 [color]
     ui = auto
 [pull]
@@ -34,6 +34,7 @@
 [init]
 	defaultBranch = main
 [gpg "ssh"]
-	allowedSignersFile = /home/sosn071/.ssh/allowed_signers
+	# The repo file, not the ~/.ssh symlink to it: op-ssh-sign-wsl.exe runs on Windows and cannot follow WSL symlinks
+	allowedSignersFile = ~/Documents/stuff/dotconfig/ssh/allowed_signers
 [push]
 	autoSetupRemote = true

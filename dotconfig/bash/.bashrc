@@ -1,4 +1,4 @@
-export PATH=$PATH:/home/sosn071/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -120,8 +120,12 @@ fi
 
 alias ssh='ssh.exe'
 alias ssh-add='ssh-add.exe'
+alias op='op.exe'
 
-eval "$(oh-my-posh init bash --config /mnt/d/OneDrive\ -\ PNNL/Documents/custom.omp.json)"
+command -v starship &>/dev/null && eval "$(starship init bash)"
 
 export PATH=$HOME/Scripts/DidierStevensSuite/:$PATH
 export PATH="$PATH:/opt/nvim/"
+
+# Machine-specific settings (nvm, tool install paths, ...) that don't belong in the repo
+[ -f ~/.bashrc.local ] && . ~/.bashrc.local

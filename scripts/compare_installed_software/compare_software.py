@@ -8,7 +8,7 @@ import pprint
 
 def getSoftware(filename):
     # opens passed file, skips the first line and returns the column data for Name
-    # unless the Vendor is Microsoft or Pnnl
+    # unless the Vendor is Microsoft
     with open(filename, "r") as file:
         next(file)
         filecontents = csv.DictReader(file)
@@ -17,7 +17,7 @@ def getSoftware(filename):
             [
                 row["Name"]
                 for row in filecontents
-                if row["Vendor"] not in ("Pnnl", "Microsoft")
+                if row["Vendor"] != "Microsoft"
             ]
         )
 

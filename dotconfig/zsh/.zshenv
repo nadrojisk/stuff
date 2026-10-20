@@ -1,6 +1,6 @@
 
 # Added by jcode installer
-export PATH="/home/sosn071/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # ── XDG Base Directories ──────────────────────────────────────────────────────
 export XDG_CONFIG_HOME="$HOME/.config"
