@@ -1,19 +1,10 @@
-[includeIf "gitdir/i:*"]
-    path = ~/.gitconfig-windows
-
-[includeIf "gitdir/i:/"]
-    path = ~/.gitconfig-wsl
-
 [core]
     excludesfile = ~/.config/git/ignore
-    ignoreCase = true
     safecrlf = false
     whitespace = -trailing-space
-	fileMode = false
 	autocrlf = input
     #eol = lf
     #editor = code --wait
-	longpaths = true
 [user]
     name = Jordan Sosnowski
     email = nadrojisk@pm.me
@@ -34,7 +25,17 @@
 [init]
 	defaultBranch = main
 [gpg "ssh"]
-	# The repo file, not the ~/.ssh symlink to it: op-ssh-sign-wsl.exe runs on Windows and cannot follow WSL symlinks
-	allowedSignersFile = ~/Documents/stuff/dotconfig/ssh/allowed_signers
+	allowedSignersFile = ~/.ssh/allowed_signers
 [push]
 	autoSetupRemote = true
+
+# Platform settings live in their own files. `make install` links only the one for this machine, git skips missing includes, and
+# native Windows links ~/.gitconfig-windows by hand (see README). After the settings above, so a platform file can override them.
+[include]
+    path = ~/.gitconfig-windows
+    path = ~/.gitconfig-wsl
+    path = ~/.gitconfig-macos
+
+# Machine-specific settings (credential helpers, ...) that don't belong in the repo. Last, so it wins.
+[include]
+    path = ~/.gitconfig.local

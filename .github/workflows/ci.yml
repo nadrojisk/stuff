@@ -52,6 +52,33 @@ jobs:
           severity: '"Error"'
           enableExit: true
 
+  desktop-profile:
+    name: Desktop profile installs cleanly and keeps the WSL settings to WSL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq fish zsh
+      - name: Install into an empty HOME, twice (the second run must change nothing)
+        run: |
+          export HOME="$(mktemp -d)"
+          make install
+          make install | grep -E '^  (link|warn|ERROR) ' && { echo "second run was not a no-op"; exit 1; } || true
+          make check | tail -n +3 | grep -v ' OK$' && { echo "a link is not OK"; exit 1; } || true
+          echo "HOME=$HOME" >> "$GITHUB_ENV"
+      - name: Shell configs parse
+        run: |
+          fish --no-execute dotconfig/fish/config.fish
+          zsh -n dotconfig/zsh/.zshrc
+          bash -n dotconfig/bash/.bashrc
+      - name: Plain Linux gets no Windows ssh or signer
+        run: |
+          for key in core.sshCommand gpg.ssh.program; do
+            if value="$(git config --global --includes --get "$key")"; then
+              echo "$key is set to '$value' on plain Linux"; exit 1
+            fi
+          done
+          test -z "$(fish -c 'echo $BROWSER')" || { echo "BROWSER is set outside WSL"; exit 1; }
+
   server-profile:
     name: Server profile installs cleanly and stays free of WSL-specific content
     runs-on: ubuntu-latest

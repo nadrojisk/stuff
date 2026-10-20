@@ -6,7 +6,6 @@ HOME  := $(HOME)
 # Each entry is: <dst>|<src>
 LINKS := \
 	$(HOME)/.gitconfig|$(DOT)/git/.gitconfig \
-	$(HOME)/.gitconfig-wsl|$(DOT)/git/.gitconfig-wsl \
 	$(HOME)/.config/git/ignore|$(DOT)/git/xdg/ignore \
 	$(HOME)/.config/git/aliases|$(DOT)/git/aliases.gitconfig \
 	$(HOME)/.bashrc|$(DOT)/bash/.bashrc \
@@ -24,6 +23,16 @@ LINKS := \
 	$(HOME)/.config/wireshark/preferences|$(DOT)/wireshark/preferences \
 	$(HOME)/.config/wireshark/dfilter_buttons|$(DOT)/wireshark/dfilter_buttons \
 	$(HOME)/.config/wireshark/decode_as_entries|$(DOT)/wireshark/decode_as_entries
+
+# Platform git settings (ssh command, 1Password signer), included by .gitconfig. Only this machine's file is linked; the shell
+# configs check $WSL_DISTRO_NAME themselves. PLATFORM can be overridden, e.g. `make install PLATFORM=linux`.
+PLATFORM ?= $(shell if grep -qi microsoft /proc/version 2>/dev/null; then echo wsl; \
+	elif [ "$$(uname -s)" = Darwin ]; then echo macos; else echo linux; fi)
+ifeq ($(PLATFORM),wsl)
+LINKS += $(HOME)/.gitconfig-wsl|$(DOT)/git/.gitconfig-wsl
+else ifeq ($(PLATFORM),macos)
+LINKS += $(HOME)/.gitconfig-macos|$(DOT)/git/.gitconfig-macos
+endif
 
 # ── server profile ────────────────────────────────────────────────────────────
 # What a headless server needs, and nothing tied to the WSL desktop: no .gitconfig (identity, 1Password signing via Windows),
@@ -70,13 +79,16 @@ dirs: ## Create required XDG state and cache directories
 	@echo "  dirs    XDG state/cache directories created"
 
 # ── install ───────────────────────────────────────────────────────────────────
-install: dirs ## Symlink all dotfiles into place
+install: dirs ## Symlink all dotfiles into place (detects WSL, macOS or Linux)
+	@echo "  platform $(PLATFORM)"
 	$(call link_all,$(LINKS))
 	@echo ""
 	@echo "Done. Reload your shell:"
 	@echo "  fish: source ~/.config/fish/config.fish"
 	@echo "  zsh:  source ~/.zshrc"
 	@echo "  bash: source ~/.bashrc"
+	@echo ""
+	@echo "Per-machine settings go in untracked files: ~/.config/fish/local.fish, ~/.bashrc.local, ~/.gitconfig.local"
 
 # ── check ─────────────────────────────────────────────────────────────────────
 check: ## Show status of all managed symlinks
