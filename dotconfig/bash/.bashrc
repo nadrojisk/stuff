@@ -118,9 +118,12 @@ if ! shopt -oq posix; then
 fi
 
 
-alias ssh='ssh.exe'
-alias ssh-add='ssh-add.exe'
-alias op='op.exe'
+# WSL: use the Windows ssh and 1Password CLIs so the 1Password SSH agent works
+if [ -n "$WSL_DISTRO_NAME" ]; then
+    alias ssh='ssh.exe'
+    alias ssh-add='ssh-add.exe'
+    alias op='op.exe'
+fi
 
 command -v starship &>/dev/null && eval "$(starship init bash)"
 
