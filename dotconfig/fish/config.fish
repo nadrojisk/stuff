@@ -32,7 +32,7 @@ end
 
 # ── EDITOR / BROWSER ──────────────────────────────────────────────────────────
 set -gx EDITOR vim
-set -gx BROWSER wslview
+set -q WSL_DISTRO_NAME; and set -gx BROWSER wslview
 set -gx XCURSOR_SIZE 14
 set -gx XCURSOR_THEME Adwaita
 set -gx QT_QPA_PLATFORMTHEME qt6ct
@@ -55,5 +55,14 @@ end
 alias fishconfig="vim ~/.config/fish/config.fish"
 alias fishsource="source ~/.config/fish/config.fish"
 alias ip="ip --color=auto"
-alias clip="iconv -f UTF-8 -t UTF-16LE | clip.exe"
-alias wireshark="LIBGL_ALWAYS_SOFTWARE=1 /usr/bin/wireshark 2>/dev/null"
+
+# ── WSL ───────────────────────────────────────────────────────────────────────
+if set -q WSL_DISTRO_NAME
+    alias clip="iconv -f UTF-8 -t UTF-16LE | clip.exe"
+    # WSLg has no GPU acceleration for Wireshark's Qt UI
+    alias wireshark="LIBGL_ALWAYS_SOFTWARE=1 /usr/bin/wireshark 2>/dev/null"
+end
+
+# Machine-specific settings (iTerm2 shell integration, tool install paths, ...) that don't belong in the repo. Sourced last so it
+# can wrap the prompt.
+test -r ~/.config/fish/local.fish; and source ~/.config/fish/local.fish

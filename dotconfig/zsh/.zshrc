@@ -27,7 +27,7 @@ plugins=(
 )
 
 zstyle ':omz:update' mode auto
-source $ZSH/oh-my-zsh.sh
+[[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 [[ -s "${ZSH_COMPDUMP}" && ! -s "${ZSH_COMPDUMP}.zwc" ]] && zcompile "${ZSH_COMPDUMP}"
 
 # ── PROMPT ────────────────────────────────────────────────────────────────────
@@ -37,7 +37,7 @@ fi
 
 # ── EDITOR / BROWSER ──────────────────────────────────────────────────────────
 export EDITOR=vim
-export BROWSER=wslview
+[[ -n $WSL_DISTRO_NAME ]] && export BROWSER=wslview
 
 # ── ZSH OPTIONS ───────────────────────────────────────────────────────────────
 unsetopt extendedglob
@@ -60,6 +60,10 @@ alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias zshsource="source ~/.zshrc"
 alias ip='ip --color=auto'
-alias clip='iconv -f UTF-8 -t UTF-16LE | clip.exe'
 alias grep='rg'
 alias vim='nvim'
+
+# ── WSL ───────────────────────────────────────────────────────────────────────
+if [[ -n $WSL_DISTRO_NAME ]]; then
+    alias clip='iconv -f UTF-8 -t UTF-16LE | clip.exe'
+fi
