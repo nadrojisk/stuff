@@ -37,12 +37,13 @@ and `make check` shows each link's status. It works out the platform and links o
 | Platform | Extra link |
 |---|---|
 | WSL (`/proc/version` mentions Microsoft) | `~/.gitconfig-wsl`: Windows `ssh.exe` and the 1Password signer, Windows-friendly `core` settings |
-| macOS | `~/.gitconfig-macos`: the 1Password signer |
-| Linux | none |
+| macOS | `~/.gitconfig-macos`: the 1Password signer; `~/.ssh/platform.conf`: the 1Password SSH agent socket |
+| Linux | `~/.ssh/platform.conf`: the 1Password SSH agent socket (`~/.1password/agent.sock`) |
 
 Override the detection with `make install PLATFORM=linux`. The shell configs check `$WSL_DISTRO_NAME` themselves, so the same
 `config.fish`, `.zshrc` and `.bashrc` work everywhere. Put per-machine settings in untracked files that the tracked ones source
-last: `~/.config/fish/local.fish`, `~/.bashrc.local` and `~/.gitconfig.local`.
+last (first for ssh, which keeps the first value it sees): `~/.config/fish/local.fish`, `~/.bashrc.local`, `~/.gitconfig.local`
+and `~/.ssh/config.local`.
 
 **Windows (PowerShell):**
 ```powershell

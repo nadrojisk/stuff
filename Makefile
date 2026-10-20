@@ -24,14 +24,18 @@ LINKS := \
 	$(HOME)/.config/wireshark/dfilter_buttons|$(DOT)/wireshark/dfilter_buttons \
 	$(HOME)/.config/wireshark/decode_as_entries|$(DOT)/wireshark/decode_as_entries
 
-# Platform git settings (ssh command, 1Password signer), included by .gitconfig. Only this machine's file is linked; the shell
-# configs check $WSL_DISTRO_NAME themselves. PLATFORM can be overridden, e.g. `make install PLATFORM=linux`.
+# Platform git settings (ssh command, 1Password signer, included by .gitconfig) and ssh settings (the 1Password agent socket,
+# included by ssh/config). Only this machine's files are linked; the shell configs check $WSL_DISTRO_NAME themselves. PLATFORM can
+# be overridden, e.g. `make install PLATFORM=linux`.
 PLATFORM ?= $(shell if grep -qi microsoft /proc/version 2>/dev/null; then echo wsl; \
 	elif [ "$$(uname -s)" = Darwin ]; then echo macos; else echo linux; fi)
 ifeq ($(PLATFORM),wsl)
 LINKS += $(HOME)/.gitconfig-wsl|$(DOT)/git/.gitconfig-wsl
 else ifeq ($(PLATFORM),macos)
-LINKS += $(HOME)/.gitconfig-macos|$(DOT)/git/.gitconfig-macos
+LINKS += $(HOME)/.gitconfig-macos|$(DOT)/git/.gitconfig-macos \
+	$(HOME)/.ssh/platform.conf|$(DOT)/ssh/platform-macos.conf
+else
+LINKS += $(HOME)/.ssh/platform.conf|$(DOT)/ssh/platform-linux.conf
 endif
 
 # ── server profile ────────────────────────────────────────────────────────────
