@@ -1,175 +1,184 @@
-[aws]
-symbol = "  "
+"$schema" = 'https://starship.rs/config-schema.json'
 
-[buf]
-symbol = " "
+# The amro oh-my-posh theme ported to starship, with the Nerd Font symbols preset's glyphs.
+# Line 1: user, path and git on the left; toolchain versions, OS and clock pushed right by $fill.
+# Line 2: a root marker, then the "#" prompt character.
+format = """
+$username\
+$hostname\
+[ on](#45F1C2)\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$fill\
+$nodejs\
+$python\
+$java\
+$dotnet\
+$golang\
+$rust\
+$dart\
+$julia\
+$ruby\
+$aws\
+$kubernetes\
+$os\
+$time
+${custom.root}\
+$character"""
 
-[c]
-symbol = " "
+add_newline = true
 
-[cmake]
-symbol = " "
+[fill]
+symbol = " "
 
-[conda]
-symbol = " "
+[username]
+show_always = true
+style_user = "#45F1C2"
+style_root = "#45F1C2"
+format = "[ $user]($style)"
 
-[crystal]
-symbol = " "
-
-[dart]
-symbol = " "
+# Not in amro, but on a server you are always over SSH and want to know which host you are on.
+[hostname]
+ssh_only = true
+ssh_symbol = ""
+style = "#45F1C2"
+format = "[@$hostname]($style)"
 
 [directory]
-read_only = " 󰌾"
-
-[docker_context]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
-
-[fennel]
-symbol = " "
-
-[fossil_branch]
-symbol = " "
+style = "#0CA0D8"
+truncation_length = 100
+truncate_to_repo = false
+read_only = " \U000f033e"
+format = "[  $path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
 symbol = " "
+style = "#14A5AE"
+format = "[$symbol$branch(:$remote_branch)]($style) "
 
 [git_commit]
-tag_symbol = '  '
+tag_symbol = "  "
+style = "#14A5AE"
 
-[golang]
-symbol = " "
+[git_state]
+style = "#14A5AE"
 
-[guix_shell]
-symbol = " "
-
-[haskell]
-symbol = " "
-
-[haxe]
-symbol = " "
-
-[hg_branch]
-symbol = " "
-
-[hostname]
-ssh_symbol = " "
-
-[java]
-symbol = " "
-
-[julia]
-symbol = " "
-
-[kotlin]
-symbol = " "
-
-[lua]
-symbol = " "
-
-[memory_usage]
-symbol = "󰍛 "
-
-[meson]
-symbol = "󰔷 "
-
-[nim]
-symbol = "󰆥 "
-
-[nix_shell]
-symbol = " "
+# amro shows only the stash count.
+[git_status]
+style = "#14A5AE"
+format = "([$stashed]($style) )"
+stashed = " ${count}"
 
 [nodejs]
 symbol = " "
-
-[ocaml]
-symbol = " "
-
-[os.symbols]
-Alpaquita = " "
-Alpine = " "
-AlmaLinux = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CachyOS = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "󰛓 "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = "󰈸 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-Nobara = " "
-OpenBSD = "󰈺 "
-openSUSE = " "
-OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-RockyLinux = " "
-Redox = "󰀘 "
-Solus = "󰠳 "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Void = " "
-Windows = "󰍲 "
-
-[package]
-symbol = "󰏗 "
-
-[perl]
-symbol = " "
-
-[php]
-symbol = " "
-
-[pijul_channel]
-symbol = " "
+style = "#3C873A"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
 
 [python]
 symbol = " "
+style = "#FFE873"
+version_format = "${raw}"
+format = "[${symbol}(${virtualenv} )${version}]($style) "
 
-[rlang]
-symbol = "󰟔 "
+[java]
+symbol = " "
+style = "#ffffff"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
+
+[dotnet]
+symbol = " "
+style = "#0d6da8"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
+
+[golang]
+symbol = " "
+style = "#06aad5"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
+
+[rust]
+symbol = "\U000f1617 "
+style = "#925837"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
+
+[dart]
+symbol = " "
+style = "#055b9c"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
+
+[julia]
+symbol = " "
+style = "#359a25"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
 
 [ruby]
 symbol = " "
+style = "#9c1006"
+version_format = "${raw}"
+format = "[$symbol($version)]($style) "
 
-[rust]
-symbol = "󱘗 "
+[aws]
+symbol = " "
+style = "#faa029"
+format = "[$symbol($profile)(@$region)]($style) "
 
-[scala]
-symbol = " "
+[kubernetes]
+disabled = false
+symbol = "\U000f10fe "
+style = "#ffffff"
+format = "[$symbol$context( :: $namespace)]($style) "
 
-[swift]
-symbol = " "
+[os]
+disabled = false
+style = "#5398c2"
+format = "[$symbol]($style)"
 
-[zig]
-symbol = " "
+[os.symbols]
+AlmaLinux = " "
+Alpine = " "
+Amazon = " "
+Arch = " "
+CentOS = " "
+Debian = " "
+Fedora = " "
+FreeBSD = " "
+Linux = " "
+Macos = " "
+Mint = " "
+NixOS = " "
+openSUSE = " "
+Raspbian = " "
+Redhat = "\U000f111b "
+RedHatEnterprise = "\U000f111b "
+RockyLinux = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "\U000f0372 "
 
-[gradle]
-symbol = " "
+[time]
+disabled = false
+style = "#00C5C7"
+time_format = "%T"
+format = "[ $time]($style)"
+
+# amro's root segment: a lightning bolt when the shell runs as root.
+[custom.root]
+when = 'test "$(id -u)" -eq 0'
+shell = ["sh"]
+style = "#cd5e42"
+format = "[ ]($style)"
+
+# amro's "#" prompt. It turns red when the last command failed (amro has no error state).
+[character]
+success_symbol = "[#](#CD4277)"
+error_symbol = "[#](#cd5e42)"
+vimcmd_symbol = "[#](#45F1C2)"
