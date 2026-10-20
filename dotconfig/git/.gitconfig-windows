@@ -1,4 +1,7 @@
 [core]
     sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+    fileMode = false
+    ignoreCase = true
+    longpaths = true
 [gpg "ssh"]
     program = C:/Users/Jordan/AppData/Local/Microsoft/WindowsApps/op-ssh-sign.exe

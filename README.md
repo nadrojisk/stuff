@@ -31,16 +31,22 @@ Personal configuration files for various development tools and applications.
 
 ### Installation
 
-Symlink the configs you need to their appropriate locations:
+**Linux, macOS and WSL:** `make install` links everything in `LINKS` (existing files are backed up to `<name>.bak.<timestamp>`),
+and `make check` shows each link's status. It works out the platform and links only that platform's git settings:
 
-**Linux/macOS:**
-```bash
-ln -s ~/path/to/repo/dotconfig/nvim ~/.config/nvim
-ln -s ~/path/to/repo/dotconfig/tmux ~/.config/tmux
-```
+| Platform | Extra link |
+|---|---|
+| WSL (`/proc/version` mentions Microsoft) | `~/.gitconfig-wsl`: Windows `ssh.exe` and the 1Password signer, Windows-friendly `core` settings |
+| macOS | `~/.gitconfig-macos`: the 1Password signer |
+| Linux | none |
+
+Override the detection with `make install PLATFORM=linux`. The shell configs check `$WSL_DISTRO_NAME` themselves, so the same
+`config.fish`, `.zshrc` and `.bashrc` work everywhere. Put per-machine settings in untracked files that the tracked ones source
+last: `~/.config/fish/local.fish`, `~/.bashrc.local` and `~/.gitconfig.local`.
 
 **Windows (PowerShell):**
 ```powershell
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitconfig-windows" -Target ".\dotconfig\git\.gitconfig-windows"
 New-Item -ItemType SymbolicLink -Path "$env:APPDATA\Code\User\settings.json" -Target ".\dotconfig\vscode\settings.json"
 ```
 

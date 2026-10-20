@@ -1,4 +1,10 @@
 [core]
     sshCommand = ssh.exe
+    # Repos often live on the Windows side (/mnt/c), where file modes, case and path length follow Windows
+    fileMode = false
+    ignoreCase = true
+    longpaths = true
 [gpg "ssh"]
     program = "/mnt/c/Users/Jordan/AppData/Local/Microsoft/WindowsApps/op-ssh-sign-wsl.exe"
+    # The repo file, not the ~/.ssh symlink to it: op-ssh-sign-wsl.exe runs on Windows and cannot follow WSL symlinks
+    allowedSignersFile = ~/Documents/stuff/dotconfig/ssh/allowed_signers
