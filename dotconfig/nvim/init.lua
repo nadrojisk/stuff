@@ -244,8 +244,20 @@ rtp:prepend(lazypath)
 --  To update plugins you can run
 --    :Lazy update
 --
+-- A server's checkout is managed by Ansible, so lazy.nvim must not rewrite the tracked lockfile there: 10-server.fish points it
+-- elsewhere, seeded once from the repo's pins.
+local lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json"
+if vim.env.NVIM_LAZY_LOCKFILE then
+	if not (vim.uv or vim.loop).fs_stat(vim.env.NVIM_LAZY_LOCKFILE) then
+		vim.fn.mkdir(vim.fs.dirname(vim.env.NVIM_LAZY_LOCKFILE), "p")
+		vim.fn.writefile(vim.fn.readfile(lockfile, "b"), vim.env.NVIM_LAZY_LOCKFILE, "b")
+	end
+	lockfile = vim.env.NVIM_LAZY_LOCKFILE
+end
+
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup("plugins", {
+	lockfile = lockfile,
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table

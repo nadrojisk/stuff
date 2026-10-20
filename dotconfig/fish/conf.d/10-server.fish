@@ -11,3 +11,5 @@ if status is-interactive
 end
 
 set -gx EDITOR vim
+# Keeps lazy.nvim from modifying the Ansible-managed checkout (see ../../nvim/init.lua).
+set -gx NVIM_LAZY_LOCKFILE ~/.local/state/nvim/lazy-lock.json
