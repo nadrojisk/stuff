@@ -244,8 +244,22 @@ rtp:prepend(lazypath)
 --  To update plugins you can run
 --    :Lazy update
 --
+-- A pinned checkout (homelab's Ansible dotfiles role, under ~/.local/share/dotfiles) must stay clean, or the next run refuses to
+-- update it: there the lockfile lives in the data dir, seeded once from the repo's.
+local lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json"
+if vim.fn.resolve(vim.fn.stdpath("config")):find(vim.fs.dirname(vim.fn.stdpath("data")) .. "/dotfiles/", 1, true) then
+	local uv = vim.uv or vim.loop
+	local data_lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json"
+	if not uv.fs_stat(data_lockfile) then
+		vim.fn.mkdir(vim.fn.stdpath("data"), "p")
+		uv.fs_copyfile(lockfile, data_lockfile)
+	end
+	lockfile = data_lockfile
+end
+
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup("plugins", {
+	lockfile = lockfile,
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
