@@ -58,6 +58,10 @@ alias ip="ip --color=auto"
 
 # ── WSL ───────────────────────────────────────────────────────────────────────
 if set -q WSL_DISTRO_NAME
+    # The Windows ssh and 1Password CLIs, so the 1Password SSH agent works (as in .bashrc)
+    alias ssh="ssh.exe"
+    alias ssh-add="ssh-add.exe"
+    alias op="op.exe"
     alias clip="iconv -f UTF-8 -t UTF-16LE | clip.exe"
     # WSLg has no GPU acceleration for Wireshark's Qt UI
     alias wireshark="LIBGL_ALWAYS_SOFTWARE=1 /usr/bin/wireshark 2>/dev/null"

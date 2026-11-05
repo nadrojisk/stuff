@@ -3,7 +3,8 @@
 # Untracked: hosts and settings for this machine only.
 Include config.local
 # The 1Password SSH agent socket for this OS. `make install` links platform-macos.conf or platform-linux.conf here; on WSL and
-# Windows nothing is linked, as Windows' ssh.exe (git's sshCommand there) reaches the agent through its default named pipe.
+# Windows nothing is linked, as Windows' ssh.exe (git's sshCommand there, and what the WSL shells alias ssh to) reaches the agent
+# through its default named pipe.
 Include platform.conf
 
 ConnectionAttempts 3
