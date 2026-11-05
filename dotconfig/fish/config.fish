@@ -1,7 +1,7 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
     set -g fish_greeting
-    alias grep="rg"
+    abbr -a grep rg
     alias vim="nvim"
     if command -q xsetroot
         xsetroot -cursor_name left_ptr 2>/dev/null
